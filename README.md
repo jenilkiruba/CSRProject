@@ -1,2 +1,2 @@
 # CSRProject
-CSR CrossRoads Project
+CSR Project
