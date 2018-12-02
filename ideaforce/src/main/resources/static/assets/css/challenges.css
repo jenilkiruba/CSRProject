@@ -160,11 +160,7 @@ ul.footer_icon li:hover:nth-child(5) a:after{
 .hovereffect {
     width:100%;
     height:100%;
-<<<<<<< HEAD
     float:right;
-=======
-    float:left;
->>>>>>> 99674b4777a58e8f898f564638aa99ec4f8a4780
     overflow:hidden;
     position:relative;
     text-align:center;
@@ -247,11 +243,8 @@ ul.footer_icon li:hover:nth-child(5) a:after{
 .hovereffect:hover a.info {
     -webkit-transition-delay:.2s;
     transition-delay:.2s;
-<<<<<<< HEAD
 }
 
 .div .challenge {
     margin: 15px 15px 15px 15px;
-=======
->>>>>>> 99674b4777a58e8f898f564638aa99ec4f8a4780
 }
