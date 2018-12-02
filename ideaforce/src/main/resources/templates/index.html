@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <span th:include="common/header :: common-header"></span>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/index.css}"/>
+    <title> IdeaForce Home</title>
+</head>
+<body>
+<header>
+    <div th:replace="common/header :: header('index')"></div>
+</header>
+<div class="container main">
+    <div class="container text-center">
+        <img class="cover_image rounded" th:src="@{/assets/images/banner.jpg}">
+    </div>
+    <br>
+    <div class="d-flex justify-content-around">
+        <div class="p-2 square rounded text-center">% <br>to Goal</div>
+        <div class="p-2 square rounded text-center"># <br>Participants</div>
+        <div class="p-2 square rounded text-center"># <br>Sites</div>
+    </div>
+    <hr style="border: solid 1px; width: 90%">
+    <div class="container info"><h6 class="text-center">AROUND THE WORLD</h6></div>
+    <br>
+    <div class="container info"><h6 class="text-center">WHY AROUND THE WORLD and HOW YOU CAN PARTICIPATE</h6></div>
+    <br>
+    <div class="container info"><h6 class="text-center">AROUND THE WORLD - TEAM/PLACEHOLDER FOR ADDITIONAL INFO</h6></div>
+    <br>
+</div>
+<footer>
+<div th:replace="common/header :: footer"></div>
+</footer>
+<span th:include="common/header :: before-body-scripts"></span>
+</body>
+</html>
