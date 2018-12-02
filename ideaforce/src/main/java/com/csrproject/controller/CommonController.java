@@ -1,5 +1,6 @@
 package com.csrproject.controller;
 
+<<<<<<< HEAD
 import com.csrproject.model.Challenges;
 import com.csrproject.repository.ChallengeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Optional;
+=======
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+>>>>>>> 99674b4777a58e8f898f564638aa99ec4f8a4780
 
 /**
  * Created by kaushv5 on 11/25/2018.
@@ -17,14 +22,25 @@ import java.util.Optional;
 @Controller
 public class CommonController {
 
+<<<<<<< HEAD
     @Autowired
     ChallengeRepository challengeRepository;
 
+=======
+>>>>>>> 99674b4777a58e8f898f564638aa99ec4f8a4780
     @RequestMapping("/home")
     public String HomePage(){
         return "index";
     }
 
+<<<<<<< HEAD
+=======
+    @RequestMapping("/challenges")
+    public String Challenges(){
+        return "challenges";
+    }
+
+>>>>>>> 99674b4777a58e8f898f564638aa99ec4f8a4780
     @RequestMapping("/gallery")
     public String Gallery(){
         return "gallery";
@@ -34,6 +50,7 @@ public class CommonController {
     public String LeaderBoard(){
         return "leaderboard";
     }
+<<<<<<< HEAD
 
     @RequestMapping("/challenges")
     public ModelAndView getChallenges(Model model){
@@ -52,4 +69,6 @@ public class CommonController {
         System.out.println("Challenge is"+ challengeRepository.findById(id).toString());
         return mv1;
     }
+=======
+>>>>>>> 99674b4777a58e8f898f564638aa99ec4f8a4780
 }
