@@ -152,9 +152,7 @@ ul.footer_icon li:hover:nth-child(5) a:after{
     height: 5vw;
 }
 .info{
-    background-color: rgba(219,218,220,0.8);
-    border: solid 2px;
-    border-color: #2dac30;
+    background-color: #2dac30;
 }
 
 .hovereffect {

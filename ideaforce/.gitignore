@@ -1,26 +1,19 @@
-/target/
-!.mvn/wrapper/maven-wrapper.jar
-
-### STS ###
-.apt_generated
+syntax: glob
 .classpath
-.factorypath
 .project
 .settings
-.springBeans
-.sts4-cache
-
-### IntelliJ IDEA ###
-.idea
-*.iws
+.DS_Store
+.idea/
+target/
+unite
+*.pyc
 *.iml
 *.ipr
-.mvn
-
-### NetBeans ###
-/nbproject/private/
-/build/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+*.iws
+*.ids
+*.class
+*.data
+*.index
+*.log
+# Ignore pdf files for feature documentation
+src/site/markdown/*.pdf

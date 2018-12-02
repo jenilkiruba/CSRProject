@@ -1,4 +1,4 @@
-package com.csrproject;
+package com.emc.ideaforce;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class CsrprojectApplicationTests {
+public class IdeaForceApplicationTests {
 
 	@Test
 	public void contextLoads() {
