@@ -3,6 +3,7 @@ syntax: glob
 .project
 .settings
 .DS_Store
+.mvn/
 .idea/
 target/
 unite
