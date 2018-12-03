@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.ElementCollection;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,6 +25,7 @@ public class ChallengeEntry {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(length = 100)
     private String id;
 
     /**
@@ -34,10 +35,9 @@ public class ChallengeEntry {
 
     private String userId;
 
-    @ElementCollection(targetClass=String.class)
-    private List<String> videos;
+    private String[] videos;
 
-    @OneToMany(targetEntity=ChallengeImage.class, mappedBy="imageId", fetch= FetchType.LAZY)
+    @OneToMany(targetEntity = ChallengeImage.class, mappedBy = "imageId", fetch = FetchType.LAZY)
     private List<ChallengeImage> images;
 
     private boolean approved;

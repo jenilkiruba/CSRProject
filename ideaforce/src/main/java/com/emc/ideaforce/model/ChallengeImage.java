@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,10 +22,11 @@ public class ChallengeImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(length = 100)
     private String imageId;
 
     @ManyToOne
-    @JoinColumn(name="id")
+    @JoinColumn(name = "id")
     private ChallengeEntry challengeEntry;
 
     private byte[] data;
