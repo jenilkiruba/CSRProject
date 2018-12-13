@@ -35,6 +35,16 @@ public class CommonController {
         return "leaderboard";
     }
 
+    @RequestMapping("/submitstory")
+    public String submitstory() {
+        return "submitstory";
+    }
+
+    @RequestMapping("/profile")
+    public String profilepage() {
+        return "profile";
+    }
+
     @RequestMapping("/challenges")
     public ModelAndView getChallenges(Model model){
         ModelAndView mv = new ModelAndView("challenges");
