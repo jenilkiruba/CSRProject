@@ -21,7 +21,7 @@
     <div class="row justify">
     <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 challenge" style="padding-top: 1%" th:each="challenge : ${challenges}">
         <div class="hovereffect">
-            <img class="img-responsive" th:src="@{/assets/images/placeholder.jpg}" alt="">
+            <img class="img-responsive" th:src="@{'/assets/images/challenge_image/' + image_ + ${challenge.id}+ '.jpg'}" alt="">
             <div class="overlay">
                 <h2 th:text="${challenge.name}"></h2>
                 <a class="info" th:href="@{'/challenges/'+ ${challenge.id}}">Read More</a>

@@ -19,8 +19,8 @@ public class CsrprojectApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... strings) throws Exception {
-		for(int i=0; i<9; i++){
-			challengeRepository.save( new Challenges("Reusable Straws","Nice Trick to Reuse the Straws"));
-		}
+//		challengeRepository.save( new Challenges("Reusable Straws","Nice Trick to Reuse the Straws"));
+//		challengeRepository.save(new Challenges("Change the current bulbs to energy savers","they consume 60% less electricity than a traditional bulb. Open the refrigerator only when necessary."));
+//		challengeRepository.save( new Challenges("Plant trees ","this will increase the resilience of the ecosystem and maintain biodiversity. It is said that one hectare of forest, eliminates in one year, the carbon dioxide produced by four families during that same time."));
 	}
 }
