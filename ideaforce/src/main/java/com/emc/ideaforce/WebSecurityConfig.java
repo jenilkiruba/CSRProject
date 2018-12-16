@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import static com.emc.ideaforce.utils.Utils.PWD_PRIVELEGE;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -20,8 +22,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/registration*").permitAll()
-                .antMatchers("/login*").permitAll()
+                .antMatchers("/registration*", "/login*", "/user/forgotPassword*", "/user/resetPassword*",
+                        "/user/changePassword*", "/updatepassword").permitAll()
+                .antMatchers("/user/updatePassword*", "/user/savePassword*")
+                .hasAuthority(PWD_PRIVELEGE)
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

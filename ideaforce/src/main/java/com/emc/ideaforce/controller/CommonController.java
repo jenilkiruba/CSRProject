@@ -3,13 +3,14 @@ package com.emc.ideaforce.controller;
 import com.emc.ideaforce.model.ChallengeDetail;
 import com.emc.ideaforce.model.Story;
 import com.emc.ideaforce.model.User;
-import com.emc.ideaforce.model.UserDto;
 import com.emc.ideaforce.service.CommonService;
+import com.emc.ideaforce.service.MailService;
 import com.emc.ideaforce.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -22,12 +23,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.security.RolesAllowed;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
+
+import static com.emc.ideaforce.utils.Utils.PWD_PRIVELEGE;
 
 /**
  * Common web controller
@@ -46,6 +50,9 @@ public class CommonController {
     public static final String GALLERY_VIEW = "gallery";
     public static final String LEADER_BOARD_VIEW = "leaderboard";
     public static final String REDIRECT_DIRECTIVE = "redirect:/";
+    public static final String UPDATE_PASSWORD_VIEW = "updatepassword";
+    public static final String FORGOT_PASSWORD_VIEW = "forgotpassword";
+    public static final String MESSAGE = "message";
 
     @Autowired
     private final CommonService commonService;
@@ -53,7 +60,18 @@ public class CommonController {
     @Autowired
     private final UserService userService;
 
+    @Autowired
+    private final MailService mailService;
+
     Logger logger = LoggerFactory.getLogger(CommonController.class);
+
+    private static String getPwdResetUrl(HttpServletRequest request, User user, String token) {
+        return getBaseUrl(request) + "/user/changePassword?email=" + user.getEmail() + "&token=" + token;
+    }
+
+    private static String getBaseUrl(HttpServletRequest req) {
+        return req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + req.getContextPath();
+    }
 
     @GetMapping("/registration")
     public ModelAndView showRegistrationForm(Principal principal, ModelMap model) {
@@ -119,6 +137,58 @@ public class CommonController {
     @GetMapping("/")
     public String index(Principal principal) {
         return HOME_VIEW;
+    }
+
+    @GetMapping("/user/forgotPassword")
+    public String password() {
+        return FORGOT_PASSWORD_VIEW;
+    }
+
+    @PostMapping("/user/resetPassword")
+    public ModelAndView resetPassword(HttpServletRequest request,
+            @RequestParam("email") String userEmail) {
+
+        User user = userService.getUser(userEmail);
+        if (user == null) {
+            return new ModelAndView("/user/resetPassword", MESSAGE, "User not found");
+        }
+
+        String token = userService.createPasswordResetRequestForUser(user);
+        mailService.sendSimpleMessage(user.getEmail(), "Reset password",
+                "Reset password " + getPwdResetUrl(request, user, token));
+        return new ModelAndView(FORGOT_PASSWORD_VIEW, MESSAGE,
+                "Password reset mail sent successfully, check your inbox.");
+    }
+
+    @GetMapping(value = "/user/changePassword")
+    public ModelAndView showChangePasswordPage(ModelMap model,
+            @RequestParam("email") String email,
+            @RequestParam("token") String token) {
+        String result = userService.validatePasswordResetToken(email, token);
+
+        if (result != null) {
+            return new ModelAndView(FORGOT_PASSWORD_VIEW, model);
+        }
+        model.addAttribute("newpassword", new PasswordDto());
+        return new ModelAndView(UPDATE_PASSWORD_VIEW, model);
+    }
+
+    @PostMapping("/user/savePassword")
+    @RolesAllowed(PWD_PRIVELEGE)
+    public ModelAndView savePassword(@ModelAttribute("newpassword") @Valid PasswordDto passwordDto,
+            BindingResult result,
+            Errors errors,
+            HttpServletRequest httpServletRequest) {
+        if (!result.hasErrors()) {
+            User user = (User) SecurityContextHolder.getContext()
+                    .getAuthentication().getPrincipal();
+            userService.changeUserPassword(user, passwordDto.getPassword());
+            httpServletRequest.getSession().invalidate();
+            return new ModelAndView(LOGIN_VIEW, MESSAGE, "Password reset successful");
+        }
+        else {
+            return new ModelAndView(UPDATE_PASSWORD_VIEW, "newpassword", passwordDto);
+        }
     }
 
     @GetMapping("/home")
