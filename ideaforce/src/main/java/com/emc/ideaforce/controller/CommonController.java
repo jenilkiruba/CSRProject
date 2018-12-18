@@ -10,8 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
@@ -32,6 +34,7 @@ import java.security.Principal;
 import java.util.List;
 
 import static com.emc.ideaforce.utils.Utils.PWD_PRIVELEGE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 /**
  * Common web controller
@@ -44,6 +47,9 @@ public class CommonController {
     public static final String CHALLENGE_DETAIL = "challengedetail";
     public static final String CHALLENGE = "challenge";
     public static final String USER_CHALLENGES = "userchallenges";
+
+    Logger logger = LoggerFactory.getLogger(CommonController.class);
+
     public static final String HOME_VIEW = "index";
     public static final String REGISTRATION_VIEW = "registration";
     public static final String LOGIN_VIEW = "login";
@@ -62,8 +68,6 @@ public class CommonController {
 
     @Autowired
     private final MailService mailService;
-
-    Logger logger = LoggerFactory.getLogger(CommonController.class);
 
     private static String getPwdResetUrl(HttpServletRequest request, User user, String token) {
         return getBaseUrl(request) + "/user/changePassword?email=" + user.getEmail() + "&token=" + token;
@@ -135,8 +139,13 @@ public class CommonController {
     }
 
     @GetMapping("/")
-    public String index(Principal principal) {
-        return HOME_VIEW;
+    public ModelAndView index(Principal principal) {
+        return new ModelAndView("index");
+    }
+
+    @RequestMapping("/home")
+    public ModelAndView home(Principal principal) {
+        return new ModelAndView("index");
     }
 
     @GetMapping("/user/forgotPassword")

@@ -67,8 +67,6 @@ public class UserService implements UserDetailsService {
         user.setLastName(userDtoToRegister.getLastName());
         user.setPassword(passwordEncoder.encode(userDtoToRegister.getPassword()));
         user.setEmail(userDtoToRegister.getEmail().toLowerCase());
-        user.setRoles(new String[]{REG_USER_ROLE});
-
         User registered = repository.save(user);
         logger.info("Created user {}", user.getEmail());
 

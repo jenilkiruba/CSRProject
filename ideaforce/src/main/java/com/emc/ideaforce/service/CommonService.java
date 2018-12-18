@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -50,5 +51,26 @@ public class CommonService {
             challengeDetailRepository
                     .save(new ChallengeDetail(i + "", "CSR Challenge " + i, "About Challenge " + i + "..."));
         }
+        storyRepository.deleteAll();
+        for (int i = 1; i <= 10; i++) {
+            Story storyObj = new Story();
+
+            storyObj.setApproved(false);
+            storyObj.setChallengeId(i+"Entry");
+            storyObj.setUserId("temp_user");
+            storyObj.setCreated(new Date());
+            storyObj.setLastUpdated(new Date());
+            storyRepository.save(storyObj);
+        }
+    }
+
+    public List<Story> findAllByApprovedIsFalse() {
+        return storyRepository.findAllByApprovedIsFalse();
+    }
+
+    public void setStoryApproved(String entryId) {
+        Story storyObj = storyRepository.findStoryByIdEquals(entryId);
+        storyObj.setApproved(true);
+        storyRepository.save(storyObj );
     }
 }
