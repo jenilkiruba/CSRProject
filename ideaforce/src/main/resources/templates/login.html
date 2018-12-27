@@ -1,23 +1,46 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title> IdeaForce Login</title>
+    <span th:include="common/header :: common-header"></span>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/login.css}"/>
+    <title> IdeaForce Login </title>
 </head>
 <body>
-<div th:if="${param.error}">
-    Invalid username and password.
-</div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
-<div/>
-<div class="container main">
-    <form th:action="@{/login}" method="post">
-        <div><label> User Name : <input type="text" name="username"/> </label></div>
-        <div><label> Password: <input type="password" name="password"/> </label></div>
-        <div><input type="submit" value="Sign In"/></div>
-    </form>
-</div>
+<header>
+    <div class="container-fluid mx-auto header">
+        <div class="alert alert-danger" th:if="${param.error}">
+            There was a problem logging in. Please try again.
+        </div>
+        <div class="alert alert-danger" th:if="${param.logout}">
+            You have logged Out Successfully !!
+        </div>
+        <h1 class="mx-auto main_banner">Around the World</h1>
+    </div>
+</header>
+<section id="login_section">
+    <div class="container">
+        <form class="form-signin mx-auto" th:action="@{/login}" method="post">
+            <div class="form-group align-items-center text-center" id="login">
+                <div class="col-sm-4 mx-auto">
+                    <span id="reauth-email" class="reauth-email"></span>
+                    <input type="text" id="inputUsername" class="form-control mx-sm-3 mb-2" placeholder="Username" name="username"  required autofocus>
+                </div>
+
+                <div class="col-sm-4 mx-auto">
+                    <input type="password" id="inputPassword" class="form-control mx-sm-3 mb-2" placeholder="Password" name="password" autocomplete="password" required>
+                </div>
+                <div class="col-sm-4 mx-auto text-center">
+                    <br>
+                    <button class="btn btn-primary btn-lg btn-signin text-center mx-auto" type="submit">Sign In</button>
+                </div>
+                <br>
+                <a href="/registration">Sign Up</a>
+            </div>
+        </form>
+        <!--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">-->
+    </div>
+</section>
+<span th:include="common/header :: before-body-scripts"></span>
 </body>
 </html>

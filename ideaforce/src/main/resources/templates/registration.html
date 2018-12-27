@@ -3,42 +3,69 @@
       xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <span th:include="common/header :: common-header"></span>
-    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/index.css}"/>
-    <title>User Registration</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/login.css}"/>
+    <title>Ideaforce Registration</title>
 </head>
-<h1 th:text="#{label.regform.title}">form</h1>
-<form action="/registration" th:object="${user}" method="POST" enctype="utf8">
-    <div>
-        <label th:text="#{label.user.firstName}">first</label>
-        <input th:field="*{firstName}"/>
-        <p th:each="error: ${#fields.errors('firstName')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label th:text="#{label.user.lastName}">last</label>
-        <input th:field="*{lastName}"/>
-        <p th:each="error : ${#fields.errors('lastName')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label th:text="#{label.user.email}">email</label>
-        <input type="email" th:field="*{email}"/>
-        <p th:each="error : ${#fields.errors('email')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label th:text="#{label.user.password}">password</label>
-        <input type="password" th:field="*{password}"/>
-        <p th:each="error : ${#fields.errors('password')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label th:text="#{label.user.confirmPass}">confirm</label>
-        <input type="password" th:field="*{matchingPassword}"/>ref
-    </div>
-    <button type="submit" th:text="#{label.regform.submit}">submit</button>
-</form>
 
-<a th:href="@{/login}" th:text="#{label.regform.loginLink}">login</a>
+<header>
+    <div class="container-fluid mx-auto header">
+        <h1 class="mx-auto main_banner">Around the World</h1>
+    </div>
+</header><section id="login_section">
+    <div class="container">
+        <!-- <div id="error">
+            <p th:if="${param.error}" class="text-center">
+                <span id="Error_msg"> Sorry ! Username or Password is Wrong </span>
+            </p>
+            <p th:if="${param.logout}" class="text-center">
+                <span id="Logout_msg" class="text-center"> You have Successfuly Logged Out !</span>
+            </p>
+        </div> -->
+        <form class="form-signin mx-auto" action="/registration" th:object="${user}" method="POST" enctype="utf8">
+            <div class="form-group align-items-center text-center" id="login">
+                <div class="col-sm-4 mx-auto">
+                    <input th:field="*{firstName}" class="form-control mx-sm-3 mb-2" placeholder="FirstName" required autofocus/>
+                    <p th:each="error: ${#fields.errors('firstName')}" th:text="${error}">Validation error</p>
+                </div>
+
+                <div class="col-sm-4 mx-auto">
+                    <input th:field="*{lastName}" class="form-control mx-sm-3 mb-2" placeholder="LastName" required autofocus/>
+                    <p th:each="error : ${#fields.errors('lastName')}" th:text="${error}">Validation error</p>
+                </div>
+                <div class="col-sm-4 mx-auto">
+                    <input type="email" th:field="*{email}" class="form-control mx-sm-3 mb-2" placeholder="Dell EmailId" required autofocus/>
+                    <p th:each="error : ${#fields.errors('email')}" th:text="${error}">Validation error</p>
+                </div>
+
+                <div class="col-sm-4 mx-auto">
+                    <input type="password" th:field="*{password}" class="form-control mx-sm-3 mb-2" placeholder="Password" required autofocus/>
+                    <p th:each="error : ${#fields.errors('password')}" th:text="${error}">Validation error</p>
+                </div>
+
+                <div class="col-sm-4 mx-auto">
+                    <input type="password" th:field="*{matchingPassword}" class="form-control mx-sm-3 mb-2" placeholder="Confirm Password" required autofocus/>
+                </div>
+
+                <div class="col-sm-4 mx-auto text-center">
+                    <!--<div id="remember" class="checkbox">-->
+                    <!--<label>-->
+                    <!--<input type="checkbox" value="remember-me"> Remember me-->
+                    <!--</label>-->
+                    <!--</div>-->
+                    <!--<a href="#" class="forgot-password">-->
+                    <!--Forgot the password?-->
+                    <!--</a>-->
+                    <br>
+                    <button class="btn btn-primary btn-lg btn-signin text-center mx-auto"type="submit" th:text="#{label.regform.submit}">submit</button>
+                </div>
+                <br>
+                <a th:href="@{/login}" th:text="#{label.regform.loginLink}">login</a>
+            </div>
+
+        </form>
+        <!--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">-->
+    </div>
+</section>
+<h1 th:text="#{label.regform.title}">form</h1>
 </body>
 </html>
