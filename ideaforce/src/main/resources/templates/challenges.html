@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <span th:include="common/header :: common-header"></span>
     <link rel="stylesheet" type="text/css" th:href="@{/assets/css/challenges.css}"/>
@@ -19,18 +19,17 @@
         Click on the icons to read more about each Challenge.</p>
     <hr style="border: solid 1px; width: 90%">
     <div class="row justify">
-        <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 challenge" style="padding-top: 1%"
-             th:each="challenge : ${challenges}">
-            <div class="hovereffect">
-                <img class="img-responsive" th:src="@{/assets/images/placeholder.jpg}" alt="">
-                <div class="overlay">
-                    <h2 th:text="${challenge.name}"></h2>
-                    <a class="info" th:href="@{'/challenges/'+ ${challenge.id}}">Read More</a>
-                    <a class="info" href="#">Submit Story</a>
-                </div>
+    <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 challenge" style="padding-top: 1%" th:each="challenge : ${challenges}">
+        <div class="hovereffect">
+            <img class="img-responsive" th:src="@{'/assets/images/challenge_image/' + image_ + ${challenge.id}+ '.jpg'}" alt="">
+            <div class="overlay">
+                <h2 th:text="${challenge.name}"></h2>
+                <a class="info" th:href="@{'/challenges/'+ ${challenge.id}}">Read More</a>
+                <a class="info" th:href="@{'/submitstory'}">Submit Story</a>
             </div>
-            <br>
         </div>
+        <br>
+    </div>
     </div>
     <br>
     <hr style="border: solid 1px; width: 90%">

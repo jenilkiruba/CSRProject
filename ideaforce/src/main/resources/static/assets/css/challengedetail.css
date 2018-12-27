@@ -264,6 +264,8 @@ ul.footer_icon li:hover:nth-child(5) a:after {
     transition-delay: .2s;
 }
 
-.div .challenge {
-    margin: 15px 15px 15px 15px;
+.challenge_banner{
+    width:auto;
+    height: 430px;
+    background-image:  url("/assets/images/Challenge_background.png");
 }

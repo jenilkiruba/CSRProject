@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <span th:include="common/header :: common-header"></span>
     <link rel="stylesheet" type="text/css" th:href="@{/assets/css/challengedetail.css}"/>
@@ -13,18 +13,14 @@
 <div class="container main">
 
     <div class="card">
-        <h5 class="card-header text-center" th:text="'Challenge #'+ ${challenge.id} + '    ' + ${challenge.name}"><span>Hisa kda</span>
-        </h5>
+        <h5 class="card-header text-center" th:text="'Challenge #'+ ${challenge.id} + '    ' + ${challenge.name}"></h5>
+        <div class="challenge_banner"></div>
         <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <h5 class="card-title">About the Challenge</h5>
+            <p class="card-text" th:text="${challenge.description}"></p>
+            <a href="/challenges" class="btn btn-primary">Back to Challenges</a>
         </div>
     </div>
-    <!--<h2 th:text="${challenge.id}"></h2>-->
-    <!--<h2 th:text="${challenge.name}"></h2>-->
-    <!--<h2 th:text="${challenge.description}"></h2>-->
-
 </div>
 <footer>
     <div th:replace="common/header :: footer"></div>

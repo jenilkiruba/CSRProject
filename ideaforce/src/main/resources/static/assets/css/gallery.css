@@ -1,6 +1,9 @@
 h2{
     padding: 1%;
 }
+h3{
+    color: #ffffff;
+}
 h6{
     color: white;
     margin-top: 19%;
@@ -136,28 +139,6 @@ ul.footer_icon li:hover:nth-child(5) a:before{
 }
 ul.footer_icon li:hover:nth-child(5) a:after{
     background: linear-gradient(#400080, transparent), linear-gradient(200deg, #d047d1, #ff0000, #ffff00);
-}
-
-/* Cover Image */
-.cover_image{
-    width: 60%;
-    height: 400px;
-    align-content: center;
-}
-
-.square {
-    background-color: #2dac30;
-    width: 9vw;
-    height: 9vh;
-}
-.info{
-    background-color: rgba(219,218,220,0.8);
-    border: solid 2px;
-    border-color: #2dac30;
-}
-.userinfo{
-    list-style-type: none;
-    /* border-left: #acacac solid 2px; */
 }
 
 /* Slider */
