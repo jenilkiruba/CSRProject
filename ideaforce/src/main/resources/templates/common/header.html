@@ -37,6 +37,9 @@
                     <li class="nav-item float-right" th:class="${activeTab == 'profile'}? 'active' : null" style="padding-left: 26vw;">
                         <a class="nav-link" href="/profile"><i class="far fa-user fa-lg"></i></a>
                     </li>
+                    <li sec:authorize="hasRole('ROLE_ADMIN')" th:class="${activeTab == 'admin'}? 'active' : null">
+                        <a class="nav-link" href="/admin">Pending Challenges</a>
+                    </li>
                     <li class="nav-item float-left">
                         <a class="nav-link" href="/login?logout"><i class="fas fa-sign-out-alt fa-lg"></i></a>
                     </li>
@@ -57,7 +60,7 @@
 
     </div>
     <!--<div>-->
-        <!--Copyright © 2018 IdeaForce Inc. All rights reserved.-->
+    <!--Copyright © 2018 IdeaForce Inc. All rights reserved.-->
     <!--</div>-->
 </div>
 <div th:fragment="before-body-scripts">

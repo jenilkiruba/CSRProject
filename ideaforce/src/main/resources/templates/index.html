@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <span th:include="common/header :: common-header"></span>
     <link rel="stylesheet" type="text/css" th:href="@{/assets/css/index.css}"/>
@@ -25,11 +25,12 @@
     <br>
     <div class="container info"><h6 class="text-center">WHY AROUND THE WORLD and HOW YOU CAN PARTICIPATE</h6></div>
     <br>
-    <div class="container info"><h6 class="text-center">AROUND THE WORLD - TEAM/PLACEHOLDER FOR ADDITIONAL INFO</h6></div>
+    <div class="container info"><h6 class="text-center">AROUND THE WORLD - TEAM/PLACEHOLDER FOR ADDITIONAL INFO</h6>
+    </div>
     <br>
 </div>
 <footer>
-<div th:replace="common/header :: footer"></div>
+    <div th:replace="common/header :: footer"></div>
 </footer>
 <span th:include="common/header :: before-body-scripts"></span>
 </body>
