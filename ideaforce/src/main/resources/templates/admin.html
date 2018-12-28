@@ -20,6 +20,7 @@
             <th></th>
             <th></th>
             <th></th>
+            <th></th>
         </thead>
 
         <tr th:each="unapprovedchallenge : ${unapprovedchallenges}">
@@ -29,6 +30,7 @@
             <td><a class="info" style="padding:2px;" th:href="@{'/approve/'+ ${unapprovedchallenge.id}}">Approve</a></td>
             <td><a class="info" style="padding:2px;" th:href="@{'/addcomments/'+ ${unapprovedchallenge.id}}">Add Comments</a></td>
             <td><a class="info" style="padding:2px;" th:href="@{'/viewcomments/'+ ${unapprovedchallenge.id}}">View Comments</a></td>
+            <td><a class="info" style="padding:2px;" th:href="@{'/viewdetails/'+ ${unapprovedchallenge.id}}">View Details</a></td>
         </tr>
     </table>
 </div>

@@ -31,6 +31,7 @@ public class AdminController {
     public static final String APPROVE_CHALLENGE = "approved";
     public static final String ADD_COMMENTS_VIEW = "addcomments";
     public static final String VIEW_COMMENTS_VIEW = "viewcomments";
+    private static final String VIEW_STORY_DETAILS_VIEW = "storydetails";
 
     private final CommonService commonService;
 
@@ -75,6 +76,22 @@ public class AdminController {
         List<StoryComments> storyComments = commonService.getAllCommentsForStory(id);
         ModelAndView mvObject = new ModelAndView(VIEW_COMMENTS_VIEW);
         mvObject.addObject("storyComments", storyComments);
+        return mvObject;
+    }
+
+    @GetMapping(value="viewdetails/{id}")
+    public  ModelAndView getStoryDetails(@PathVariable String id) {
+        Story storyObj = commonService.getStoryById(id);
+        StoryDto storyDto = new StoryDto();
+        storyDto.setChallengeId(storyObj.getChallengeId());
+        storyDto.setId(storyObj.getId());
+        storyDto.setDescription(storyObj.getDescription());
+        storyDto.setVideo(storyObj.getVideo());
+        storyDto.setCreated(storyObj.getCreated());
+        storyDto.setLastUpdated(storyObj.getLastUpdated());
+        storyDto.setStoryImageDtos(storyObj.getImages());
+        ModelAndView mvObject = new ModelAndView(VIEW_STORY_DETAILS_VIEW);
+        mvObject.addObject("storyDetails", storyDto);
         return mvObject;
     }
 
