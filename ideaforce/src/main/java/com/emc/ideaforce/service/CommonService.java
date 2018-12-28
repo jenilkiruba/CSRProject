@@ -4,10 +4,12 @@ import com.emc.ideaforce.controller.CommentDto;
 import com.emc.ideaforce.model.ChallengeDetail;
 import com.emc.ideaforce.model.Story;
 import com.emc.ideaforce.model.StoryComments;
+import com.emc.ideaforce.model.StoryImage;
 import com.emc.ideaforce.model.User;
 import com.emc.ideaforce.repository.ChallengeDetailRepository;
 import com.emc.ideaforce.repository.StoryCommentRepository;
 import com.emc.ideaforce.repository.StoryRepository;
+import com.emc.ideaforce.utils.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -80,6 +82,8 @@ public class CommonService {
 
             story.setChallengeId(i + " entry");
             story.setUserId("temp_user");
+            story.setDescription("This is sample description posted for current story");
+            story.setVideo("https://www.youtube.com/watch?v=k3R09aaWUM8&t=2789s");
             storyRepository.save(story);
         }
     }
@@ -88,6 +92,10 @@ public class CommonService {
         Story storyObj = storyRepository.findStoryByIdEquals(entryId);
         storyObj.setApproved(true);
         storyRepository.save(storyObj );
+    }
+
+    public Story getStoryById(String storyId) {
+        return storyRepository.findStoryByIdEquals(storyId);
     }
 
     public void saveStoryComment(CommentDto commentModel, User currentUser) {
