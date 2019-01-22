@@ -25,7 +25,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
+import java.util.Random;
 
 import static com.emc.ideaforce.utils.Utils.CP_PRIVILEGE;
 
@@ -92,7 +92,7 @@ public class SecurityController {
             }
             else {
                 //generate code and send mail
-                String code = UUID.randomUUID().toString();
+                String code = getVerificationCode();
                 verificationCodeMap.put(emailVerificationDto.getEmailId(),
                         new EmailVerificationDto(emailVerificationDto.getEmailId(), code, true));
                 mailService.sendSimpleMessage(emailVerificationDto.getEmailId(),
@@ -233,6 +233,10 @@ public class SecurityController {
 
     private static String getBaseUrl(HttpServletRequest req) {
         return req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + req.getContextPath();
+    }
+
+    private static String getVerificationCode() {
+        return new Random().nextInt(899999) + 100000 + "";
     }
 
 }
