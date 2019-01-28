@@ -4,6 +4,7 @@ import com.emc.ideaforce.model.ChallengeDetail;
 import com.emc.ideaforce.model.Story;
 import com.emc.ideaforce.model.StoryImage;
 import com.emc.ideaforce.model.User;
+import com.emc.ideaforce.repository.ChallengerCountProjection;
 import com.emc.ideaforce.service.CommonService;
 import com.emc.ideaforce.service.UserService;
 import com.emc.ideaforce.utils.CommonException;
@@ -157,8 +158,13 @@ public class CommonController {
     }
 
     @GetMapping("/leaderboard")
-    public String getLeaderBoardView() {
-        return LEADER_BOARD_VIEW;
+    public ModelAndView getLeaderBoardView() {
+        ModelAndView mv = new ModelAndView(LEADER_BOARD_VIEW);
+        List<Story> latestChallengesUndertaken = commonService.getLatestChallengesUndertaken();
+        List<ChallengerCountProjection> challengerDetails = commonService.getTopTenChallengers();
+        mv.addObject("latestchallenges", latestChallengesUndertaken);
+        mv.addObject("topchallengers", challengerDetails);
+        return mv;
     }
 
     @GetMapping("/profile")

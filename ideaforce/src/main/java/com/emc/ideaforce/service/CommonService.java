@@ -6,12 +6,14 @@ import com.emc.ideaforce.model.Story;
 import com.emc.ideaforce.model.StoryComments;
 import com.emc.ideaforce.model.User;
 import com.emc.ideaforce.repository.ChallengeDetailRepository;
+import com.emc.ideaforce.repository.ChallengerCountProjection;
 import com.emc.ideaforce.repository.StoryCommentRepository;
 import com.emc.ideaforce.repository.StoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -112,4 +114,7 @@ public class CommonService {
         }
     }
 
+    public List<ChallengerCountProjection> getTopTenChallengers() {
+        return storyRepository.findUsersByChallengeIdNumberOfChallengesTaken();
+    }
 }
