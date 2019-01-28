@@ -19,7 +19,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = EmailValidator.class)
 public @interface ValidEmail {
 
-    String message() default "Invalid dell email address";
+    String message() default "Invalid Dell Email address";
 
     Class<?>[] groups() default {};
 

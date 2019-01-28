@@ -11,50 +11,46 @@
     <div class="container-fluid mx-auto header">
         <h1 class="mx-auto main_banner">Around the World</h1>
     </div>
-</header><section id="login_section">
+</header>
+<section id="login_section">
     <div class="container">
-        <!-- <div id="error">
-            <p th:if="${param.error}" class="text-center">
-                <span id="Error_msg"> Sorry ! Username or Password is Wrong </span>
-            </p>
-            <p th:if="${param.logout}" class="text-center">
-                <span id="Logout_msg" class="text-center"> You have Successfuly Logged Out !</span>
-            </p>
-        </div> -->
         <form class="form-signin mx-auto" action="/registration" th:object="${user}" method="POST" enctype="utf8">
             <div class="form-group align-items-center text-center" id="login">
+
                 <div class="col-sm-4 mx-auto">
-                    <input th:field="*{firstName}" class="form-control mx-sm-3 mb-2" placeholder="FirstName" required autofocus/>
-                    <p th:each="error: ${#fields.errors('firstName')}" th:text="${error}">Validation error</p>
+                    <input th:field="*{firstName}" class="form-control mx-sm-3 mb-2" placeholder="First Name" required autofocus/>
+                    <p class="error-list" th:each="error: ${#fields.errors('firstName')}" th:text="${error}">Validation error</p>
                 </div>
 
                 <div class="col-sm-4 mx-auto">
-                    <input th:field="*{lastName}" class="form-control mx-sm-3 mb-2" placeholder="LastName" required autofocus/>
-                    <p th:each="error : ${#fields.errors('lastName')}" th:text="${error}">Validation error</p>
-                </div>
-                <div class="col-sm-4 mx-auto">
-                    <input type="email" th:field="*{email}" class="form-control mx-sm-3 mb-2" placeholder="Dell EmailId" required autofocus/>
-                    <p th:each="error : ${#fields.errors('email')}" th:text="${error}">Validation error</p>
+                    <input th:field="*{lastName}" class="form-control mx-sm-3 mb-2" placeholder="Last Name" required autofocus/>
+                    <p class="error-list" th:each="error : ${#fields.errors('lastName')}" th:text="${error}">Validation error</p>
                 </div>
 
                 <div class="col-sm-4 mx-auto">
-                    <input type="password" th:field="*{password}" class="form-control mx-sm-3 mb-2" placeholder="Password" required autofocus/>
-                    <p th:each="error : ${#fields.errors('password')}" th:text="${error}">Validation error</p>
+                    <input type="email" th:readonly=true th:field="*{email}" class="form-control mx-sm-3 mb-2" placeholder="Dell Email Id" required autofocus/>
+                    <p class="error-list" th:each="error : ${#fields.errors('email')}" th:text="${error}">Validation error</p>
+                </div>
+
+                <div class="col-sm-4 mx-auto">
+                    <input th:field="*{employeeId}" class="form-control mx-sm-3 mb-2" placeholder="Employee Id" required autofocus/>
+                    <p class="error-list" th:each="error : ${#fields.errors('employeeId')}" th:text="${error}">Validation error</p>
+                </div>
+
+                <div class="col-sm-4 mx-auto">
+                    <input type="password" th:field="*{password}" class="form-control mx-sm-3 mb-2" placeholder="Password (8-20 chars)" required autofocus/>
+                    <p class="error-list" th:each="error : ${#fields.errors('password')}" th:text="${error}">Validation error</p>
                 </div>
 
                 <div class="col-sm-4 mx-auto">
                     <input type="password" th:field="*{matchingPassword}" class="form-control mx-sm-3 mb-2" placeholder="Confirm Password" required autofocus/>
                 </div>
 
+                <div class="col-sm-4 mx-auto">
+                    <p class="error-list" th:each="error : ${#fields.globalErrors()}" th:text="${error}">Validation error</p>
+                </div>
+
                 <div class="col-sm-4 mx-auto text-center">
-                    <!--<div id="remember" class="checkbox">-->
-                    <!--<label>-->
-                    <!--<input type="checkbox" value="remember-me"> Remember me-->
-                    <!--</label>-->
-                    <!--</div>-->
-                    <!--<a href="#" class="forgot-password">-->
-                    <!--Forgot the password?-->
-                    <!--</a>-->
                     <br>
                     <button class="btn btn-primary btn-lg btn-signin text-center mx-auto"type="submit" th:text="#{label.regform.submit}">submit</button>
                 </div>

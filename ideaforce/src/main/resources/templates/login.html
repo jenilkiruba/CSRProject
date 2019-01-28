@@ -10,10 +10,13 @@
 <header>
     <div class="container-fluid mx-auto header">
         <div class="alert alert-danger" th:if="${param.error}">
-            There was a problem logging in. Please try again.
+            Invalid user name or password.
         </div>
         <div class="alert alert-danger" th:if="${param.logout}">
-            You have logged Out Successfully !!
+            Logged Out successfully !
+        </div>
+        <div class="alert alert-danger" th:if="${message}">
+            <label th:text="${message}"/>
         </div>
         <h1 class="mx-auto main_banner">Around the World</h1>
     </div>
@@ -24,7 +27,7 @@
             <div class="form-group align-items-center text-center" id="login">
                 <div class="col-sm-4 mx-auto">
                     <span id="reauth-email" class="reauth-email"></span>
-                    <input type="text" id="inputUsername" class="form-control mx-sm-3 mb-2" placeholder="Username" name="username"  required autofocus>
+                    <input type="text" id="inputUsername" class="form-control mx-sm-3 mb-2" placeholder="Dell Email Id" name="username"  required autofocus>
                 </div>
 
                 <div class="col-sm-4 mx-auto">
@@ -34,10 +37,12 @@
                     <br>
                     <button class="btn btn-primary btn-lg btn-signin text-center mx-auto" type="submit">Sign In</button>
                 </div>
-                <br>
-                <a href="/registration">Sign Up</a>
             </div>
         </form>
+
+        <div class="form-group align-items-center text-center" id="reg">
+            <a href="/registration">Sign Up</a> &nbsp;|&nbsp; <a th:href="@{/user/forgotPassword}" th:text="#{label.forotPwd.link}"> forgotpassword </a>
+        </div>
         <!--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">-->
     </div>
 </section>

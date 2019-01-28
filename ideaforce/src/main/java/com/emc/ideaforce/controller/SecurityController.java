@@ -47,6 +47,7 @@ public class SecurityController {
     public static final String VERIFY_EMAIL_VIEW = "verify";
     public static final String USER_MODEL = "user";
     public static final String VERIFY_EMAIL_MODEL = "verifyEmail";
+    public static final String RESET_PWD_MODEL = "reset";
 
     private final UserService userService;
 
@@ -68,6 +69,13 @@ public class SecurityController {
             BindingResult result,
             Errors errors,
             HttpServletRequest httpServletRequest) {
+
+        ModelAndView errorView = new ModelAndView(VERIFY_EMAIL_VIEW, VERIFY_EMAIL_MODEL, emailVerificationDto);
+
+        if (result.hasErrors()) {
+            return errorView;
+        }
+
         // check whether email is already registered
         if (userService.userExists(emailVerificationDto.getEmailId())) {
             result.rejectValue("emailId", "email.exists");
@@ -81,9 +89,15 @@ public class SecurityController {
                 if (generated.getVerificationCode().equals(emailVerificationDto.getVerificationCode())) {
                     UserDto userDto = new UserDto();
                     userDto.setEmail(emailVerificationDto.getEmailId());
-                    String[] names = emailVerificationDto.getEmailId().split("[\\.\\@]");
-                    userDto.setFirstName(names[0]);
-                    userDto.setLastName(names[1]);
+                    try {
+                        String[] names = emailVerificationDto.getEmailId().split("[\\.\\@]");
+                        userDto.setFirstName(names[0].replaceAll("\\d",""));
+                        userDto.setLastName(names[1].replaceAll("\\d",""));
+                    }
+                    catch (Exception e) {
+                        LOG.warn("Error while identifying first and last names {}",
+                                emailVerificationDto.getEmailId(), e);
+                    }
                     return new ModelAndView(REGISTRATION_VIEW, USER_MODEL, userDto);
                 }
                 else {
@@ -95,14 +109,21 @@ public class SecurityController {
                 String code = getVerificationCode();
                 verificationCodeMap.put(emailVerificationDto.getEmailId(),
                         new EmailVerificationDto(emailVerificationDto.getEmailId(), code, true));
-                mailService.sendSimpleMessage(emailVerificationDto.getEmailId(),
-                        "Email Verification Code",
-                        "Your email verification code is : " + code);
+                try {
+                    mailService.sendSimpleMessage(emailVerificationDto.getEmailId(),
+                            "Email Verification Code",
+                            "Your email verification code is : " + code);
+                }
+                catch (Exception e) {
+                    LOG.error("Email could not be sent to {}", emailVerificationDto.getEmailId(), e);
+                    result.rejectValue("emailId", "email.send.failed");
+                    return errorView;
+                }
             }
 
             emailVerificationDto.setCodeGenerated(true);
         }
-        return new ModelAndView(VERIFY_EMAIL_VIEW, VERIFY_EMAIL_MODEL, emailVerificationDto);
+        return errorView;
     }
 
     @GetMapping("/registration")
@@ -175,42 +196,63 @@ public class SecurityController {
     }
 
     @GetMapping("/user/forgotPassword")
-    public String password() {
-        return FORGOT_PASSWORD_VIEW;
+    public ModelAndView password() {
+        return new ModelAndView(FORGOT_PASSWORD_VIEW, RESET_PWD_MODEL, new ResetPwdDto());
+    }
+
+    @GetMapping("/user/resetPassword")
+    public ModelAndView resetPassword() {
+        return new ModelAndView(FORGOT_PASSWORD_VIEW, RESET_PWD_MODEL, new ResetPwdDto());
     }
 
     @PostMapping("/user/resetPassword")
-    public ModelAndView resetPassword(HttpServletRequest request,
-            @RequestParam("email") String userEmail) {
+    public ModelAndView resetPassword(
+            @ModelAttribute(RESET_PWD_MODEL) @Valid ResetPwdDto resetPwdDto,
+            BindingResult result,
+            Errors errors,
+            HttpServletRequest httpServletRequest) {
 
-        User user = userService.getUser(userEmail);
-        if (user == null) {
-            return new ModelAndView("/user/resetPassword", MESSAGE, "User not found");
+        ModelAndView modelAndView = new ModelAndView(FORGOT_PASSWORD_VIEW, RESET_PWD_MODEL, resetPwdDto);
+
+        if (errors.hasErrors()) {
+            return modelAndView;
         }
-
+        User user = userService.getUser(resetPwdDto.getEmailId());
+        if (user == null) {
+            result.rejectValue("emailId", "user.notexists");
+            return modelAndView;
+        }
         String token = userService.createPasswordResetRequestForUser(user);
-        mailService.sendSimpleMessage(user.getEmail(), "Reset password",
-                "To reset your 'Ideaforce - Around the World' portal account password, click " + getPwdResetUrl(request, user,
-                        token));
-        return new ModelAndView(FORGOT_PASSWORD_VIEW, MESSAGE,
-                "Password reset mail sent successfully, check your inbox.");
+        try {
+            mailService.sendSimpleMessage(user.getEmail(), "Reset password",
+                    "To reset your 'Ideaforce - Around the World' portal account password, click "
+                            + getPwdResetUrl(httpServletRequest, user, token));
+            return new ModelAndView(LOGIN_VIEW, MESSAGE, "Password reset email sent successfully !");
+        }
+        catch (Exception e) {
+            LOG.error("Email could not be sent to {}", resetPwdDto.getEmailId(), e);
+            result.rejectValue("emailId", "email.send.failed");
+        }
+        return modelAndView;
     }
 
     @GetMapping(value = "/user/changePassword")
     public ModelAndView showChangePasswordPage(ModelMap model,
             @RequestParam("email") String email,
-            @RequestParam("token") String token) {
+            @RequestParam("token") String token,
+            HttpServletRequest request) {
         String result = userService.validatePasswordResetToken(email, token);
 
         if (result != null) {
-            return new ModelAndView(FORGOT_PASSWORD_VIEW, model);
+            ModelAndView modelAndView = new ModelAndView(FORGOT_PASSWORD_VIEW, MESSAGE, result);
+            modelAndView.addObject(RESET_PWD_MODEL, new ResetPwdDto());
+            return modelAndView;
         }
         model.addAttribute("newpassword", new PasswordDto());
         return new ModelAndView(UPDATE_PASSWORD_VIEW, model);
     }
 
     @PostMapping("/user/savePassword")
-    @RolesAllowed(CP_PRIVILEGE)
     public ModelAndView savePassword(@ModelAttribute("newpassword") @Valid PasswordDto passwordDto,
             BindingResult result,
             Errors errors,
@@ -220,7 +262,7 @@ public class SecurityController {
                     .getAuthentication().getPrincipal();
             userService.changeUserPassword(user, passwordDto.getPassword());
             httpServletRequest.getSession().invalidate();
-            return new ModelAndView(LOGIN_VIEW, MESSAGE, "Password reset successful");
+            return new ModelAndView(LOGIN_VIEW, MESSAGE, "Password reset successful !");
         }
         else {
             return new ModelAndView(UPDATE_PASSWORD_VIEW, "newpassword", passwordDto);
