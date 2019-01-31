@@ -12,21 +12,18 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.lang.String.format;
-import static java.util.Collections.emptyList;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 /**
@@ -45,6 +42,7 @@ public class CommonController {
 
     private static final String HOME_VIEW = "index";
     private static final String SUBMIT_STORY_VIEW = "submitstory";
+    private static final String GALLERY_VIEW = "gallery";
     private static final String LEADER_BOARD_VIEW = "leaderboard";
     private static final String PROFILE_VIEW = "profile";
     private static final String MESSAGE = "message";
@@ -90,14 +88,16 @@ public class CommonController {
         return mv;
     }
 
-    @GetMapping("/submitstory/{challenge-id}")
-    public String submitStory(@PathVariable(name = "challenge-id") String challengeId) {
-        return SUBMIT_STORY_VIEW;
+    @GetMapping("/submitstory/{challengeId}")
+    public ModelAndView submitStory(@PathVariable String challengeId) {
+        ModelAndView mv = new ModelAndView(SUBMIT_STORY_VIEW);
+        mv.addObject("challengeId", challengeId);
+        return mv;
     }
 
-    @PostMapping("/submit-story/{challenge-id}")
+    @PostMapping("/submit-story")
     public ModelAndView submitStory(Principal principal,
-            @PathVariable(name = "challenge-id") String challengeId,
+            @RequestParam String challengeId,
             @RequestParam String description,
             @RequestParam MultipartFile[] images,
             @RequestParam String video) {
@@ -129,8 +129,12 @@ public class CommonController {
             mv.setViewName(CHALLENGES);
         }
         catch (Exception ex) {
+            String errorMsg = "Failed to submit story";
+            LOG.error(errorMsg, ex);
+
             mv.setViewName(SUBMIT_STORY_VIEW);
-            mv.addObject(MESSAGE, ex.getMessage());
+            mv.setStatus(INTERNAL_SERVER_ERROR);
+            mv.addObject(MESSAGE, errorMsg);
         }
 
         return mv;
@@ -138,23 +142,31 @@ public class CommonController {
 
     @ResponseBody
     @GetMapping("/gallery")
-    public List<byte[]> gallery() {
+    public ModelAndView gallery() {
+        ModelAndView mv = new ModelAndView(GALLERY_VIEW);
+
         try {
             List<Story> latestChallenges = commonService.getLatestChallengesUndertaken();
 
             // get first image from every story/challenge taken
-            return latestChallenges.stream()
+            List<String> images = latestChallenges.stream()
                     .map(Story::getImages)
                     .filter(image -> !isEmpty(image))
                     .map(image -> image.get(0).getData())
+                    .map(image -> Base64.getEncoder().encodeToString(image))
                     .collect(Collectors.toList());
+
+            mv.addObject("latestChallenges", images);
         }
         catch (Exception ex) {
             String errorMsg = "Failed to get latest challenges undertaken";
             LOG.error(errorMsg, ex);
+
+            mv.addObject(MESSAGE, errorMsg);
+            mv.setStatus(INTERNAL_SERVER_ERROR);
         }
 
-        return emptyList();
+        return mv;
     }
 
     @GetMapping("/leaderboard")
@@ -179,9 +191,11 @@ public class CommonController {
             mv.addObject("stories", stories);
         }
         catch (Exception ex) {
-            String errorMessage = "Failed to get profile details";
-            LOG.error(errorMessage + " for user {}", principal.getName(), ex);
-            mv.addObject(MESSAGE, errorMessage);
+            String errorMsg = "Failed to get profile details";
+            LOG.error(errorMsg + " for user {}", principal.getName(), ex);
+
+            mv.addObject(MESSAGE, errorMsg);
+            mv.setStatus(INTERNAL_SERVER_ERROR);
         }
 
         return mv;
@@ -224,9 +238,11 @@ public class CommonController {
             }
         }
         catch (Exception ex) {
-            String errorMessage = "Failed to update profile";
-            LOG.error(errorMessage, ex);
-            mv.addObject(MESSAGE, errorMessage);
+            String errorMsg = "Failed to update profile";
+            LOG.error(errorMsg, ex);
+
+            mv.addObject(MESSAGE, errorMsg);
+            mv.setStatus(INTERNAL_SERVER_ERROR);
         }
 
         return mv;
