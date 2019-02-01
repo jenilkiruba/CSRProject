@@ -61,7 +61,10 @@
                     <br>
                     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#messages">Current Stories</a></li>
                     <br>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#settings">Pending Stories</a></li>
+                    <li class="nav-item"
+                        th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                        <a class="nav-link" data-toggle="tab" href="#pending-stories">Pending Stories</a>
+                    </li>
                 </ul>
 
                 <div class="tab-content">
@@ -183,34 +186,26 @@
                         </form>
 
                     </div><!--/tab-pane-->
-                    <div class="tab-pane" id="settings">
+                    <div class="tab-pane" id="pending-stories">
+                        <table border="1" cellpadding="10" style="border: 1px solid #dee2e6">
+                            <thead>
+                                <th>Challenge Description</th>
+                                <th>User</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </thead>
 
-
-                        <hr>
-                        <form class="form" action="##" method="post" id="registrationForm">
-                            <div class="form-group">
-
-                                <div class="col-xs-6">
-                                    <label for="first_name"><h4>First name</h4></label>
-                                    <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first name" title="enter your first name if any.">
-                                </div>
-                            </div>
-                            <div class="form-group">
-
-                                <div class="col-xs-6">
-                                    <label for="last_name"><h4>Last name</h4></label>
-                                    <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last name" title="enter your last name if any.">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-xs-12">
-                                    <br>
-                                    <button class="btn btn-lg btn-success pull-right" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
-                                    <!--<button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>-->
-                                </div>
-                            </div>
-                        </form>
+                            <tr th:each="unapprovedchallenge : ${unapprovedchallenges}">
+                                <td th:text="${unapprovedchallenge.description}"></td>
+                                <td th:text="${unapprovedchallenge.userId}"></td>
+                                <td><a class="info" style="padding:2px;" th:href="@{'/approve/'+ ${unapprovedchallenge.id}}">Approve</a></td>
+                                <td><a class="info" style="padding:2px;" th:href="@{'/addcomments/'+ ${unapprovedchallenge.id}}">Add Comments</a></td>
+                                <td><a class="info" style="padding:2px;" th:href="@{'/viewcomments/'+ ${unapprovedchallenge.id}}">View Comments</a></td>
+                                <td><a class="info" style="padding:2px;" th:href="@{'/viewdetails/'+ ${unapprovedchallenge.id}}">View Details</a></td>
+                            </tr>
+                        </table>
                     </div>
 
                 </div><!--/tab-pane-->
