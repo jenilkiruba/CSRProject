@@ -47,6 +47,8 @@ public class CommonController {
     private static final String PROFILE_VIEW = "profile";
     private static final String MESSAGE = "message";
 
+    public static final String UNAPPROVED_CHALLENGES = "unapprovedchallenges";
+
     private final CommonService commonService;
 
     private final UserService userService;
@@ -200,6 +202,9 @@ public class CommonController {
 
             List<Story> stories = commonService.getStories(principal.getName());
             mv.addObject("stories", stories);
+
+            List<Story> unApprovedChallengeDetailList = commonService.findAllByApprovedIsFalse();
+            mv.addObject(UNAPPROVED_CHALLENGES, unApprovedChallengeDetailList );
         }
         catch (Exception ex) {
             String errorMsg = "Failed to get profile details";
