@@ -13,10 +13,10 @@
 <div class="container main">
 
     <div class="card">
-        <h5 class="card-header text-center" th:text="'Challenge #'+ ${challenge.id} + '  :  ' + ${challenge.name}"></h5>
+        <h5 class="card-header text-center" th:text="'Green Challenge #'+ ${challenge.id} + '  :  ' + ${challenge.name}"></h5>
         <div class="align-items-center text-center">
             <br>
-            <img align="middle" height="250" width="400"
+            <img align="middle" height="250" width="350"
                  th:src="@{'/assets/images/challenge_image/' + ${challenge.id}+ '.jpg'}" alt="">
 
         </div>
@@ -38,13 +38,20 @@
         </div>
 
         <div class="align-items-center text-center">
-            <a class="btn btn-primary btn-lg btn-signin text-center mx-auto" th:href="@{'/submitstory/'+ ${challenge.id}}">Submit Story</a>
             <a class="btn btn-primary btn-lg btn-signin text-center mx-auto" href="/challenges">Back to Challenges</a>
+            <a class="btn btn-primary btn-lg btn-signin text-center mx-auto" th:href="@{'/submitstory/'+ ${challenge.id}}">Submit Story</a>
         </div>
+        <div>
+            <br>
+        </div>
+    </div>
+    <div>
+        <br>
     </div>
 </div>
 
 <footer>
+    <br>
     <div th:replace="common/header :: footer"></div>
 </footer>
 <span th:include="common/header :: before-body-scripts"></span>

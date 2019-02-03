@@ -412,3 +412,13 @@ toggle {  0% {
         opacity: 1;
     }
 }
+
+.card-header{
+    background-color: #6EA204;
+    color: white;
+}
+
+
+.btn{
+    background-color: #6EA204;
+}
