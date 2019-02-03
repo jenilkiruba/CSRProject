@@ -25,15 +25,19 @@ public class ChallengeDetail {
     private String name;
 
     @NotBlank
+    @Column(length = 1000)
     private String description;
 
     @NotBlank
+    @Column(length = 1000)
     private String environmentalIssues;
 
     @NotBlank
+    @Column(length = 1000)
     private String participationSteps;
 
     @NotBlank
+    @Column(length = 100)
     private String reference;
 
 }

@@ -2,43 +2,50 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-  <span th:include="common/header :: common-header"></span>
-  <link rel="stylesheet" type="text/css" th:href="@{/assets/css/challengedetail.css}"/>
-  <title>IdeaForce</title>
+    <span th:include="common/header :: common-header"></span>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/challengedetail.css}"/>
+    <title>Around The World :: Challenges</title>
 </head>
 <body>
 <header>
-  <div th:replace="common/header :: header('challenges')"></div>
+    <div th:replace="common/header :: header('challenges')"></div>
 </header>
 <div class="container main">
 
-  <div class="card">
-    <h5 class="card-header text-center" th:text="'Challenge #'+ ${challenge.id} + '    ' + ${challenge.name}"></h5>
-    <!-- &#45;&#45; banner image-->
-    <!--<div class="challenge_banner"></div>-->
-    <div>
-      <img  th:src="@{'/assets/images/challenge_image/' + image_ + ${challenge.id}+ '.jpg'}" alt="">
+    <div class="card">
+        <h5 class="card-header text-center" th:text="'Challenge #'+ ${challenge.id} + '  :  ' + ${challenge.name}"></h5>
+        <div class="align-items-center text-center">
+            <br>
+            <img align="middle" height="250" width="400"
+                 th:src="@{'/assets/images/challenge_image/' + ${challenge.id}+ '.jpg'}" alt="">
 
-    </div>
-    <div class="card-body">
-      <h5 class="card-title">About the Challenge</h5>
-      <p class="card-text" th:utext="${challenge.description}"></p>
-      <hr>
-      <!-- <h5 class="card-title">How you can contribute</h5>-->
-      <p class="card-text" th:utext="${challenge.environmentalIssues}"></p>
-      <hr>
-      <!--<h5 class="card-title">What can be done</h5>-->
-      <p class="card-text" th:utext="${challenge.participationSteps}"></p>
-      <hr>
-      <!-- <h5 class="card-title">Additional resource for reference</h5>-->
-      <p class="card-text" th:utext="${challenge.reference}"></p>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Challenge Statement:</h5>
+            <p class="card-text" th:utext="${challenge.description}"></p>
+            <hr>
 
-      <a href="/challenges" class="btn btn-primary">Back to Challenges</a>
+            <h5 class="card-title">Environmental Issue:</h5>
+            <p class="card-text" th:utext="${challenge.environmentalIssues}"></p>
+            <hr>
+
+            <h5 class="card-title">How to Participate:</h5>
+            <p class="card-text" th:utext="${challenge.participationSteps}"></p>
+            <hr>
+
+            <h5 class="card-title">To Learn More:</h5>
+            <p class="card-text" th:utext="${challenge.reference}"></p>
+        </div>
+
+        <div class="align-items-center text-center">
+            <a class="btn btn-primary btn-lg btn-signin text-center mx-auto" th:href="@{'/submitstory/'+ ${challenge.id}}">Submit Story</a>
+            <a class="btn btn-primary btn-lg btn-signin text-center mx-auto" href="/challenges">Back to Challenges</a>
+        </div>
     </div>
-  </div>
 </div>
+
 <footer>
-  <div th:replace="common/header :: footer"></div>
+    <div th:replace="common/header :: footer"></div>
 </footer>
 <span th:include="common/header :: before-body-scripts"></span>
 </body>

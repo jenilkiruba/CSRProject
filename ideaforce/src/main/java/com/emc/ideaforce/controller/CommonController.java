@@ -203,7 +203,7 @@ public class CommonController {
             List<Story> stories = commonService.getStories(principal.getName());
             mv.addObject("stories", stories);
 
-            List<Story> unApprovedChallengeDetailList = commonService.findAllByApprovedIsFalse();
+            List<Story> unApprovedChallengeDetailList = commonService.getUnapprovedStories();
             mv.addObject(UNAPPROVED_CHALLENGES, unApprovedChallengeDetailList );
         }
         catch (Exception ex) {

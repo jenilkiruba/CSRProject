@@ -248,3 +248,11 @@ ul.footer_icon li:hover:nth-child(5) a:after{
     height: 430px;
     background-image:  url("/assets/images/Challenge_background.png");
 }
+.card-header{
+    background-color: #6EA204;
+    color: white;
+}
+
+.btn{
+    background-color: #6EA204;
+}

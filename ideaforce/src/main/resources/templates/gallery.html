@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/assets/css/gallery.css}"/>
     <script type="text/javascript" th:src="@{/assets/js/gallery.js}">
     </script>
-    <title> IdeaForce Gallery </title>
+    <title>Around The World :: Gallery</title>
 </head>
 <body>
 <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
@@ -15,16 +15,36 @@
     <div th:replace="common/header :: header('gallery')"></div>
 </header>
 <div class="container w-90 main">
-    <div class="card mx-auto">
+    <br>
+    <p class="text-center">Take a look at some of the challenges that have been taken up by participants below! </p>
+    <hr style="border: solid 1px; width: 90%">
+    <!--<div class="card mx-auto">
         <div class="card-header">
             <h3 class="text-center">LATEST CHALLENGES UNDERTAKEN</h3>
         </div>
+    </div>-->
+    <br>
+        
+        <div class="gallery">
+            <figure th:each="challenge : ${latestChallenges}">
+                <img  th:src="@{'data:image/png;base64,' + ${challenge}}" alt=""/>
+            </figure>
+        </div>
+    <!--<div class="row justify">
+    <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 challenge" style="padding-top: 1%" th:each="challenge : ${latestChallenges}">
+        <div class="hovereffect">
+            <img class="img-responsive" th:src="@{'data:image/png;base64,' + ${challenge}}" alt=""/>
+        </div>
+        <br>
     </div>
+    </div>
+    <br>
+    <hr style="border: solid 1px; width: 90%">
     <br>
     <section class="customer-logos slider">
         <div class="slide"><img th:each="challenge : ${latestChallenges}" th:src="@{'data:image/png;base64,' + ${challenge}}" alt="Image content"></div>
     </section>
-    <br>
+    <br>-->
 </div>
 <footer>
     <div th:replace="common/header :: footer"></div>

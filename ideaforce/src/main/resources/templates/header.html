@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="common-header">
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/header.css}"/>
+</head>
+<body>
+<div th:fragment="header(activeTab)">
+    <div class="container-fluid main_banner fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="">
+                <img th:src="@{'/assets/images/Dell_Logo.png'}" width="171" height="30" class="d-inline-block align-top" alt="">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav" [ngClass]="{ 'show': navbarOpen }">
+                <ul class="navbar-nav text-center">
+                    <li th:class="${activeTab == 'index'}? 'active' : null">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li th:class="${activeTab == 'challenges'}? 'active' : null">
+                        <a class="nav-link" href="/challenges">Challenges</a>
+                    </li>
+                    <li th:class="${activeTab == 'gallery'}? 'active' : null">
+                        <a class="nav-link" href="/gallery">Gallery</a>
+                    </li>
+                    <li th:class="${activeTab == 'leaderboard'}? 'active' : null">
+                        <a class="nav-link" href="/leaderboard">Leaderboard</a>
+                    </li>
+                    <li class="nav-item float-left text-right" th:class="${activeTab == 'profile'}? 'active' : null" style="padding-left: 50vw;">
+                        <a class="nav-link" href="/profile"><i class="far fa-user fa-lg"></i></a>
+                    </li>
+                    <li class="nav-item float-left">
+                        <a class="nav-link" href="/login?logout"><i class="fas fa-sign-out-alt fa-lg"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+<div th:fragment="footer">
+    <div class="container-fluid fixed-bottom footer text-center">
+        <!--<a href="mailto:dellgivingindia@emc.com?subject=Feedback for dellgivingindia.com">Send me an email</a>-->
+         <a href="mailto:dellgivingindia@emc.com?subject=Feedback for dellgivingindia.com">Send us an email</a> &copy; Copyright 2019 Dell EMC.
+        <!--<ul class="footer_icon">
+            <li><a href="#"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
+            <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+            <li><a href="#"><i class="fas fa-envelope" aria-hidden="true"></i></a></li>
+        </ul>-->
+
+    </div>
+    <!--<div>-->
+        <!--Copyright © 2018 IdeaForce Inc. All rights reserved.-->
+    <!--</div>-->
+</div>
+<div th:fragment="before-body-scripts">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</div>
+</body>
