@@ -11,19 +11,15 @@ import java.util.List;
 @Repository
 public interface StoryRepository extends JpaRepository<Story, String> {
 
-    String FIND_BY_USER = "SELECT s FROM Story s JOIN s.user u WHERE u.email = :email";
-
     List<Story> findByApprovedIsFalse();
 
-    @Query(FIND_BY_USER)
-    List<Story> findByUserEqualsAndApprovedIsTrue(@Param("email") String userId);
+    List<Story> findTop20ByApprovedIsTrueOrderByLastUpdatedDesc();
 
-    Story findStoryByIdEquals(String entryId);
-
-    @Query(FIND_BY_USER)
+    @Query("SELECT s FROM Story s JOIN s.user u WHERE u.email = :email")
     List<Story> findByUserEquals(@Param("email") String userId);
 
-    List<Story> findTop20ByApprovedIsTrueOrderByLastUpdatedDesc();
+    @Query("SELECT s FROM Story s JOIN s.user u WHERE u.email = :email AND s.approved=true")
+    List<Story> findByUserEqualsAndApprovedIsTrue(@Param("email") String userId);
 
     @Query("SELECT u.email as userId, COUNT(u) as count "
             + "FROM Story s JOIN s.user u "

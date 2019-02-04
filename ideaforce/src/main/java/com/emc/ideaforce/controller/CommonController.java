@@ -210,7 +210,7 @@ public class CommonController {
             mv.addObject("stories", stories);
 
             List<Story> unApprovedChallengeDetailList = commonService.getUnapprovedStories();
-            mv.addObject(UNAPPROVED_CHALLENGES, unApprovedChallengeDetailList );
+            mv.addObject(UNAPPROVED_CHALLENGES, unApprovedChallengeDetailList);
         }
         catch (Exception ex) {
             String errorMsg = "Failed to get profile details";
