@@ -12,14 +12,20 @@
 </header>
 <div class="container main">
     <h2 class="text-center">Story Details</h2>
+    <h3>Story Title</h3>
+    <p th:text="${storyDetails.title}"></p>
     <h3>Description</h3>
     <p th:text="${storyDetails.description}"></p>
-    <br/>
     <h3>Images</h3>
-    <img th:each="image : ${storyDetails.images}" th:src="'data:image/png;base64,' + ${image}">
-    <br/>
+    <img th:each="image : ${storyPics}" th:src="@{'data:image/png;base64,'+${image}}"/>
+    <br>
+    <br>
     <h3>Video Link</h3>
     <a th:href="${storyDetails.video}">Review Video Uploaded</a>
+    <br/>
+    <br/>
+    <h3>Submitted By</h3>
+    <p th:text="${#strings.capitalize(storyDetails.user.firstName) + ' ' + #strings.capitalize(storyDetails.user.lastName) + ' [' + storyDetails.user.email + '] '}"></p>
     <br/>
     <br/>
     <a class="info" style="padding:2px;" th:href="@{'/approve/'+ ${storyDetails.id}}">Approve</a>

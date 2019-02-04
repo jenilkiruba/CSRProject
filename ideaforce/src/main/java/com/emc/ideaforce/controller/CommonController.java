@@ -1,10 +1,10 @@
 package com.emc.ideaforce.controller;
 
+import com.emc.ideaforce.model.ChallengeCount;
 import com.emc.ideaforce.model.ChallengeDetail;
 import com.emc.ideaforce.model.Story;
 import com.emc.ideaforce.model.StoryImage;
 import com.emc.ideaforce.model.User;
-import com.emc.ideaforce.repository.ChallengerCountProjection;
 import com.emc.ideaforce.service.CommonService;
 import com.emc.ideaforce.service.UserService;
 import com.emc.ideaforce.utils.CommonException;
@@ -12,7 +12,11 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -123,8 +127,8 @@ public class CommonController {
             }
 
             Story story = new Story();
-            story.setUserId(principal.getName());
-            story.setChallengeId(challengeId);
+            story.setUser(userService.getUser(principal.getName()));
+            story.setChallengeDetail(commonService.getChallengeDetail(challengeId));
             story.setTitle(title);
             story.setDescription(description);
             story.setVideo(video);
@@ -139,7 +143,7 @@ public class CommonController {
 
             LOG.info("Challenge {} submitted successfully by user {}", challengeId, principal.getName());
 
-            return gallery();
+            return challengesList();
         }
         catch (Exception ex) {
             String errorMsg = "Failed to submit story";
@@ -185,9 +189,11 @@ public class CommonController {
     @GetMapping("/leaderboard")
     public ModelAndView getLeaderBoardView() {
         ModelAndView mv = new ModelAndView(LEADER_BOARD_VIEW);
+
         List<Story> latestChallengesUndertaken = commonService.getLatestChallengesUndertaken();
-        List<ChallengerCountProjection> challengerDetails = commonService.getTopTenChallengers();
         mv.addObject("latestchallenges", latestChallengesUndertaken);
+
+        List<ChallengeCount> challengerDetails = commonService.getTopTenChallengers();
         mv.addObject("topchallengers", challengerDetails);
         return mv;
     }

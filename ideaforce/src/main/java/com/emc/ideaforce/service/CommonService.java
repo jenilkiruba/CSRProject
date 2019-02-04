@@ -1,6 +1,7 @@
 package com.emc.ideaforce.service;
 
 import com.emc.ideaforce.controller.CommentDto;
+import com.emc.ideaforce.model.ChallengeCount;
 import com.emc.ideaforce.model.ChallengeDetail;
 import com.emc.ideaforce.model.Story;
 import com.emc.ideaforce.model.StoryComments;
@@ -12,9 +13,13 @@ import com.emc.ideaforce.repository.StoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static java.util.Collections.sort;
+import static java.util.Comparator.comparingInt;
+import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Service
 @RequiredArgsConstructor
@@ -26,11 +31,15 @@ public class CommonService {
 
     private final StoryCommentRepository storyCommentRepository;
 
+    private final UserService userService;
+
     /**
      * Returns the global Challenges list
      */
     public List<ChallengeDetail> getChallengeDetailList() {
-        return challengeDetailRepository.findAll();
+        List<ChallengeDetail> challengeDetails = challengeDetailRepository.findAll();
+        sort(challengeDetails, comparingInt(o -> Integer.parseInt(o.getId())));
+        return challengeDetails;
     }
 
     /**
@@ -48,7 +57,7 @@ public class CommonService {
      * @param userId unique identifier for the user
      */
     public List<Story> getStories(String userId) {
-        return storyRepository.findByUserIdEquals(userId);
+        return storyRepository.findByUserEquals(userId);
     }
 
     /**
@@ -64,11 +73,11 @@ public class CommonService {
      * Get the latest/recent challenges taken by users
      */
     public List<Story> getLatestChallengesUndertaken() {
-        return storyRepository.findTop20ByOrderByLastUpdatedDesc();
+        return storyRepository.findTop20ByApprovedIsTrueOrderByLastUpdatedDesc();
     }
 
     public List<Story> getApprovedStories(String userId) {
-        return storyRepository.findByUserIdEqualsAndApprovedIsTrue(userId);
+        return storyRepository.findByUserEqualsAndApprovedIsTrue(userId);
     }
 
     public List<Story> getUnapprovedStories() {
@@ -76,13 +85,13 @@ public class CommonService {
     }
 
     public void approveStory(String entryId) {
-        Story storyObj = storyRepository.findStoryByIdEquals(entryId);
+        Story storyObj = storyRepository.getOne(entryId);
         storyObj.setApproved(true);
-        storyRepository.save(storyObj );
+        storyRepository.save(storyObj);
     }
 
     public Story getStoryById(String storyId) {
-        return storyRepository.findStoryByIdEquals(storyId);
+        return storyRepository.getOne(storyId);
     }
 
     public void saveStoryComment(CommentDto commentModel, User currentUser) {
@@ -99,7 +108,15 @@ public class CommonService {
         return storyCommentRepository.findAllByStoryIdEqualsOrderByCreatedDesc(id);
     }
 
-    public List<ChallengerCountProjection> getTopTenChallengers() {
-        return storyRepository.findUsersByChallengeIdNumberOfChallengesTaken();
+    public List<ChallengeCount> getTopTenChallengers() {
+        List<ChallengeCount> challengeCounts = new ArrayList<>();
+        List<ChallengerCountProjection> challengers = storyRepository.findUsersWithStoryCount();
+        if (!isEmpty(challengers)) {
+            for (ChallengerCountProjection challengerCountProjection : challengers) {
+                challengeCounts.add(new ChallengeCount(userService.getUser(challengerCountProjection.getUserId()),
+                        challengerCountProjection.getCount()));
+            }
+        }
+        return challengeCounts;
     }
 }

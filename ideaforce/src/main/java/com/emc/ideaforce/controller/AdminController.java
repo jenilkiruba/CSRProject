@@ -2,6 +2,7 @@ package com.emc.ideaforce.controller;
 
 import com.emc.ideaforce.model.Story;
 import com.emc.ideaforce.model.StoryComments;
+import com.emc.ideaforce.model.StoryImage;
 import com.emc.ideaforce.model.User;
 import com.emc.ideaforce.service.CommonService;
 import com.emc.ideaforce.service.UserService;
@@ -17,6 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.security.RolesAllowed;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import static com.emc.ideaforce.utils.Utils.ADMIN_ROLE;
@@ -64,7 +67,7 @@ public class AdminController {
 
     @PostMapping(value = "/addcomments")
     public ModelAndView addCommentsForStory(Principal principal,
-                                            @ModelAttribute("newcomment") CommentDto commentModel) {
+            @ModelAttribute("newcomment") CommentDto commentModel) {
         User currentUser = userService.getUser(principal.getName());
         commonService.saveStoryComment(commentModel, currentUser);
         return showAdminPage();
@@ -81,16 +84,14 @@ public class AdminController {
     @GetMapping(value = "viewdetails/{id}")
     public ModelAndView getStoryDetails(@PathVariable String id) {
         Story storyObj = commonService.getStoryById(id);
-        StoryDto storyDto = new StoryDto();
-        storyDto.setChallengeId(storyObj.getChallengeId());
-        storyDto.setId(storyObj.getId());
-        storyDto.setDescription(storyObj.getDescription());
-        storyDto.setVideo(storyObj.getVideo());
-        storyDto.setCreated(storyObj.getCreated());
-        storyDto.setLastUpdated(storyObj.getLastUpdated());
-        storyDto.setStoryImageDtos(storyObj.getImages());
+        List<StoryImage> images = storyObj.getImages();
+        List<String> encodedImages = new ArrayList<>();
+        for (StoryImage image : images) {
+            encodedImages.add(Base64.getEncoder().encodeToString(image.getData()));
+        }
         ModelAndView mvObject = new ModelAndView(VIEW_STORY_DETAILS_VIEW);
-        mvObject.addObject("storyDetails", storyDto);
+        mvObject.addObject("storyDetails", storyObj);
+        mvObject.addObject("storyPics", encodedImages);
         return mvObject;
     }
 

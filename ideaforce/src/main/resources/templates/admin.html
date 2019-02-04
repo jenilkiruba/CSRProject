@@ -14,7 +14,7 @@
     <h2 class="text-center">Admin Page</h2>
     <table border="1" cellpadding="10">
         <thead>
-            <th>Challenge Id</th>
+            <th>Challenge Name</th>
             <th>User</th>
             <th>Approval Status</th>
             <th></th>
@@ -24,8 +24,8 @@
         </thead>
 
         <tr th:each="unapprovedchallenge : ${unapprovedchallenges}">
-            <td th:text="${unapprovedchallenge.challengeId}"></td>
-            <td th:text="${unapprovedchallenge.userId}"></td>
+            <td th:text="${unapprovedchallenge.challengeDetail.name}"></td>
+            <td th:text="${#strings.capitalize(unapprovedchallenge.user.firstName) + ' ' + #strings.capitalize(unapprovedchallenge.user.lastName)}"></td>
             <td th:text="${unapprovedchallenge.approved}"></td>
             <td><a class="info" style="padding:2px;" th:href="@{'/approve/'+ ${unapprovedchallenge.id}}">Approve</a></td>
             <td><a class="info" style="padding:2px;" th:href="@{'/addcomments/'+ ${unapprovedchallenge.id}}">Add Comments</a></td>

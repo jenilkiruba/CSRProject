@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.security.RolesAllowed;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -27,7 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import static com.emc.ideaforce.utils.Utils.CP_PRIVILEGE;
+import static org.springframework.util.StringUtils.capitalize;
 
 /**
  * Controller related to user registration, login and security
@@ -91,8 +90,8 @@ public class SecurityController {
                     userDto.setEmail(emailVerificationDto.getEmailId());
                     try {
                         String[] names = emailVerificationDto.getEmailId().split("[\\.\\@]");
-                        userDto.setFirstName(names[0].replaceAll("\\d",""));
-                        userDto.setLastName(names[1].replaceAll("\\d",""));
+                        userDto.setFirstName(capitalize(names[0].replaceAll("\\d","")));
+                        userDto.setLastName(capitalize(names[1].replaceAll("\\d","")));
                     }
                     catch (Exception e) {
                         LOG.warn("Error while identifying first and last names {}",

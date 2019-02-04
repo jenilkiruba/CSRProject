@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.List;
 
 import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.EAGER;
+import static javax.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.NONE;
 
 @Data
@@ -23,12 +25,13 @@ public class Story {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
 
-    /**
-     * Reference to global challenge id
-     */
-    private String challengeId;
+    @OneToOne(targetEntity = ChallengeDetail.class, fetch = EAGER)
+    @JoinColumn(nullable = false, referencedColumnName="id", name = "challengeId")
+    private ChallengeDetail challengeDetail;
 
-    private String userId;
+    @OneToOne(targetEntity = User.class, fetch = EAGER)
+    @JoinColumn(nullable = false, name = "email")
+    private User user;
 
     private String title;
 
@@ -37,7 +40,8 @@ public class Story {
     private String video;
 
     @Setter(NONE)
-    @OneToMany(mappedBy = "story", cascade = ALL, orphanRemoval = true)
+    @OneToMany(cascade = ALL, orphanRemoval = true, fetch = LAZY)
+    @JoinColumn(name = "pics")
     private List<StoryImage> images = new ArrayList<>();
 
     private boolean approved;
@@ -53,7 +57,6 @@ public class Story {
 
     public void addImage(StoryImage image) {
         this.images.add(image);
-        image.setStory(this);
     }
 
 }

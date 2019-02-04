@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -25,19 +26,19 @@ public class ChallengeDetail {
     private String name;
 
     @NotBlank
-    @Column(length = 1000)
+    @Lob
     private String description;
 
     @NotBlank
-    @Column(length = 1000)
+    @Lob
     private String environmentalIssues;
 
     @NotBlank
-    @Column(length = 1000)
+    @Lob
     private String participationSteps;
 
     @NotBlank
-    @Column(length = 100)
+    @Lob
     private String reference;
 
 }

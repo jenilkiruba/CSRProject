@@ -5,5 +5,4 @@ public interface ChallengerCountProjection {
     int getCount();
 
     String getUserId();
-
 }

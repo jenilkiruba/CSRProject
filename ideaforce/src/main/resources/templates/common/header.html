@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:fragment="common-header">
 
     <!-- Required meta tags -->
@@ -37,10 +37,13 @@
                     <li th:class="${activeTab == 'leaderboard'}? 'active' : null">
                         <a class="nav-link" href="/leaderboard">Leaderboard</a>
                     </li>
-                    <li class="nav-item float-right text-right" th:readonly="true" th:class="${activeTab == 'profile'}? 'active' : null" style="padding-left: 56vw;">
+                    <li th:class="${activeTab == 'admin'}? 'active' : null" sec:authorize="hasAuthority('ROLE_ADMIN')">
+                        <a class="nav-link" href="/admin">Admin</a>
+                    </li>
+                    <li class="nav-item float-right text-right" th:class="${activeTab == 'profile'}? 'active' : null" style="padding-left: 56vw;">
                         <a class="nav-link" href="/profile"><i class="far fa-user fa-lg"></i></a>
                     </li>
-                    <li class="nav-item float-right text-right">
+                     <li class="nav-item float-right text-right">
                         <a class="nav-link" href="/login?logout"><i class="fas fa-sign-out-alt fa-lg"></i></a>
                     </li>
                 </ul>
