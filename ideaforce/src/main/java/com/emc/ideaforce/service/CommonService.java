@@ -84,6 +84,10 @@ public class CommonService {
         return storyRepository.findByApprovedIsFalse();
     }
 
+    public int getApprovedStoriesCount() {
+        return storyRepository.countStoriesByApprovedIsTrue();
+    }
+
     public void approveStory(String entryId) {
         Story storyObj = storyRepository.getOne(entryId);
         storyObj.setApproved(true);

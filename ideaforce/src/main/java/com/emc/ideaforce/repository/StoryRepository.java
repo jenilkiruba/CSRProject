@@ -28,4 +28,6 @@ public interface StoryRepository extends JpaRepository<Story, String> {
             + "ORDER BY COUNT(u.email) DESC")
     List<ChallengerCountProjection> findUsersWithStoryCount();
 
+    int countStoriesByApprovedIsTrue();
+
 }

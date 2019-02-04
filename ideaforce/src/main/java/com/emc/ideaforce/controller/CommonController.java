@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.text.DecimalFormat;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,6 +51,7 @@ public class CommonController {
     private static final String LEADER_BOARD_VIEW = "leaderboard";
     private static final String PROFILE_VIEW = "profile";
     private static final String MESSAGE = "message";
+    DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
     public static final String UNAPPROVED_CHALLENGES = "unapprovedchallenges";
 
@@ -68,7 +70,7 @@ public class CommonController {
         int goalStatus = (int) ((approvedChallenges * 100.0f) / totalChallenges);
         mv.addObject("goalStatus", goalStatus);
 
-        int stepsTaken = approvedChallenges * 3000;
+        float stepsTaken = Float.valueOf(decimalFormat.format(commonService.getApprovedStoriesCount() * 3000 * 100.0f / 65000000));
         mv.addObject("stepsTaken", stepsTaken);
 
         long participants = userService.getAllUsers();

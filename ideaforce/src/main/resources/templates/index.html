@@ -45,17 +45,16 @@
     <div class="d-flex justify-content-around">
             <div class="row justify-content-center">
                 <div class="mr-auto col-md-3 p-5 col-sm-6">
-                    <div class="progress-bar position" data-percent="75" data-color="#fffff,#6EA204"></div>
+                    <div class="progress-bar position" th:attr="data-percent=${goalStatus}" data-color="#fffff,#6EA204"></div>
                 </div>
                 <div class="mr-auto col-md-3 p-5 col-sm-6">
-                    <div class="progress-bar position" data-percent="90" data-color="#fffff,#6EA204" data-text="# Steps Taken"></div>
+                    <div class="progress-bar position" th:attr="data-percent=${stepsTaken}" data-color="#fffff,#6EA204" data-text=" Steps Taken"></div>
                 </div>
                 <div class="mr-auto col-md-3 p-5 col-sm-6">
                     <div class="progress_static">
                         <span class="progress-bar_static"></span>
                         <span class="progress-bar_static"></span>
-                        <div class="progress-value_static">
-                            # Participants
+                        <div class="progress-value_static" th:text="'# ' + ${participants} + ' Participants'">
                         </div>
                     </div>
                 </div>
