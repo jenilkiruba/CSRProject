@@ -45,8 +45,6 @@ public class CommonController {
     private static final String LEADER_BOARD_VIEW = "leaderboard";
     private static final String MESSAGE = "message";
 
-    private final DecimalFormat decimalFormat = new DecimalFormat("#.##");
-
     private final CommonService commonService;
 
     private final UserService userService;
@@ -62,7 +60,8 @@ public class CommonController {
         int totalSteps = 65000000;
         int stepsTaken = approvedStories * 6000;
 
-        String goalStatus = decimalFormat.format((stepsTaken * 100f) / totalSteps);
+        int goalStatus = (int) Math.ceil((stepsTaken * 100f) / totalSteps);
+        goalStatus = goalStatus > 100 ? 100 : goalStatus;
 
         mv.addObject("goalStatus", goalStatus);
         mv.addObject("stepsTaken", stepsTaken);
