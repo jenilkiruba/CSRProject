@@ -1,6 +1,7 @@
 package com.emc.ideaforce.repository;
 
 import com.emc.ideaforce.model.Story;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -26,7 +27,7 @@ public interface StoryRepository extends JpaRepository<Story, String> {
             + "WHERE s.approved=true "
             + "GROUP BY u.email "
             + "ORDER BY COUNT(u.email) DESC")
-    List<ChallengerCountProjection> findUsersWithStoryCount();
+    List<ChallengerCountProjection> findUsersWithStoryCount(Pageable page);
 
     int countStoriesByApprovedIsTrue();
 
