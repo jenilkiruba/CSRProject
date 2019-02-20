@@ -40,14 +40,12 @@
                     <li th:class="${activeTab == 'admin'}? 'active' : null" sec:authorize="hasAuthority('ROLE_ADMIN')">
                         <a class="nav-link" href="/admin">Admin</a>
                     </li>
-                    <li class="nav-item float-right text-right" th:class="${activeTab == 'profile'}? 'active' : null" style="padding-left: 56vw;">
-                        <a class="nav-link" href="/profile"><i class="far fa-user fa-lg"></i></a>
-                    </li>
-                     <li class="nav-item float-right text-right">
-                        <a class="nav-link" href="/login?logout"><i class="fas fa-sign-out-alt fa-lg"></i></a>
-                    </li>
                 </ul>
             </div>
+            <form class="form-inline my-2 my-lg-0" style="">
+                <a class="nav-link" href="/profile" style="padding: 0.5rem 0.5rem"><i class="far fa-user fa-lg"></i></a>
+                <a class="nav-link" href="/login?logout" style="padding: 0.5rem 0.5rem"><i class="fas fa-sign-out-alt fa-lg"></i></a>
+            </form>
         </nav>
     </div>
 </div>
