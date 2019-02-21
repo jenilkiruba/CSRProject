@@ -41,7 +41,7 @@
                         <a class="nav-link" href="/admin">Admin</a>
                     </li>
                     <li class="nav-item float-right text-right" th:class="${activeTab == 'profile'}? 'active' : null" style="padding-left: 56vw;">
-                        <a class="nav-link" href="/profile"><i class="far fa-user fa-lg"></i></a>
+                        <!--<a class="nav-link" href="/profile"><i class="far fa-user fa-lg"></i></a>-->
                     </li>
                      <li class="nav-item float-right text-right">
                         <a class="nav-link" href="/login?logout"><i class="fas fa-sign-out-alt fa-lg"></i></a>
@@ -51,10 +51,9 @@
         </nav>
     </div>
 </div>
-<div th:fragment="footer">
-    <div class="container-fluid fixed-bottom footer text-center">
-        <a href="mailto:dellgivingindia@emc.com?subject=Feedback for dellgivingindia.com">Send us an email</a> &copy; Copyright 2019 Dell EMC.
-
+<div th:fragment="footer" >
+    <div class="container-fluid fixed-bottom footer text-center" >
+        &copy; Copyright 2019 Dell EMC. &nbsp;&nbsp; <a href="mailto:dellgivingindia@emc.com?subject=Feedback for dellgivingindia.com">Feedback</a>
     </div>
     <!--<div>-->
         <!--Copyright © 2018 IdeaForce Inc. All rights reserved.-->

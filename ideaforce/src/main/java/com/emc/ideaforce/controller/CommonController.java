@@ -121,7 +121,11 @@ public class CommonController {
 
             Story story = new Story();
             story.setUser(userService.getUser(principal.getName()));
-            story.setChallengeDetail(commonService.getChallengeDetail(challengeId));
+            ChallengeDetail challengeDetail = commonService.getChallengeDetail(challengeId);
+            if (challengeDetail == null) {
+                throw new RuntimeException("Invalid challenge id");
+            }
+            story.setChallengeDetail(challengeDetail);
             story.setTitle(title);
             story.setDescription(description);
             story.setVideo(video);
