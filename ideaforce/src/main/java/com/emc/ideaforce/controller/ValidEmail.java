@@ -30,7 +30,7 @@ class EmailValidator implements ConstraintValidator<ValidEmail, String> {
 
     private Pattern pattern;
     private Matcher matcher;
-    private static final String EMAIL_PATTERN = "^[A-Za-z0-9-+]+[.|_][A-Za-z0-9-]+@DELL\\.COM$";
+    private static final String EMAIL_PATTERN = "^[A-Z0-9._%+-]+@(?:DELL|RSA|VIRTUSTREAM|VMWARE|EMC)\\.COM$";
 
     @Override
     public boolean isValid(String email, ConstraintValidatorContext context){

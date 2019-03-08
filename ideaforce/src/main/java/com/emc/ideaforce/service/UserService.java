@@ -65,6 +65,7 @@ public class UserService implements UserDetailsService {
         user.setFirstName(userDtoToRegister.getFirstName());
         user.setLastName(userDtoToRegister.getLastName());
         user.setEmployeeId(userDtoToRegister.getEmployeeId());
+        user.setUserLocation(userDtoToRegister.getUserLocation());
         user.setPassword(passwordEncoder.encode(userDtoToRegister.getPassword()));
         user.setEmail(userDtoToRegister.getEmail().toLowerCase());
         user.setRoles(new String[] {REG_USER_ROLE});
@@ -131,10 +132,6 @@ public class UserService implements UserDetailsService {
     public void changeUserPassword(User user, String password) {
         // Update password
         user.setPassword(passwordEncoder.encode(password));
-        repository.save(user);
-    }
-
-    public void updateProfile(User user) {
         repository.save(user);
     }
 
