@@ -10,6 +10,8 @@ import com.emc.ideaforce.repository.ChallengeDetailRepository;
 import com.emc.ideaforce.repository.ChallengerCountProjection;
 import com.emc.ideaforce.repository.StoryCommentRepository;
 import com.emc.ideaforce.repository.StoryRepository;
+import com.emc.ideaforce.model.Event;
+import com.emc.ideaforce.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,7 @@ public class CommonService {
 
     private final UserService userService;
 
+    private final EventRepository eventRepository;
     /**
      * Returns the global Challenges list
      */
@@ -122,5 +125,12 @@ public class CommonService {
             }
         }
         return challengeCounts;
+    }
+    /**
+     * Returns the global events list
+     */
+    public List<Event> getEventsList() {
+        List<Event> eventDetails = eventRepository.findAll();
+        return eventDetails;
     }
 }
