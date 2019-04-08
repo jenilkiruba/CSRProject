@@ -77,7 +77,7 @@ public class CommonService {
      * Get the latest/recent challenges taken by users
      */
     public List<Story> getLatestChallengesUndertaken() {
-        return storyRepository.findTop20ByApprovedIsTrueOrderByLastUpdatedDesc();
+        return storyRepository.findTop50ByApprovedIsTrueOrderByLastUpdatedDesc();
     }
 
     public List<Story> getApprovedStories(String userId) {
