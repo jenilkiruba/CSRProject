@@ -22,7 +22,7 @@
             <p class="text-center">Take a look at some of the events and challenges that have been taken up by participants below!</p>
             <hr style="border: solid 1px; width: 90%"/>
            
-            <div class="container text-center">
+            <!--<div class="container text-center">
                 <div id="carouselIndicators" class="carousel slide w-70" data-ride="carousel">
                     <ol class="carousel-indicators" >
                         <li data-target="#carouselIndicators" th:data-slide-to="${i.index}" th:class="${i.index == 0}? 'active' : ''" th:each="event,i: ${events}"></li>  
@@ -46,9 +46,9 @@
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
-            </div>
+            </div>-->
             <br>
-            <h5 class="card-header text-center">Challenges</h5>
+            <h5 class="card-header text-center">Stories</h5>
             <div class="row justify">
                 <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 challenge" style="padding-top: 1%" th:each="challenge,iterStat  : ${latestChallenges}">
                     <div class="hovereffect">
