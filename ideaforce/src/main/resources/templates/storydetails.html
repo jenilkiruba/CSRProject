@@ -16,45 +16,48 @@
         <div class="container main">
             <div class="card">
                 <h5 class="card-header text-center" th:text="'Story Details : '+${storyDetails.title}+' by '+${#strings.capitalize(storyDetails.user.firstName) + ' ' + #strings.capitalize(storyDetails.user.lastName)}"></h5>
-                <h5 class="card-title">Challenge Name:</h5>
-                <p class="card-text" th:utext="${storyDetails.challengeDetail.name}"></p>
+                <div class="card-body">
+                    <h5 class="card-title">Challenge Name:</h5>
+                    <p class="card-text" th:utext="${storyDetails.challengeDetail.name}"></p>
 
 
-
-                <hr>
-
-                    <h5 class="card-title">Description:</h5>
-                    <p class="card-text" th:utext="${storyDetails.description}"></p>
 
                     <hr>
 
-                        <h5 class="card-title">Images:</h5>
-                        <p class="card-text" >
-                            <div class="gallery">
-                                <figure th:each="challenge : ${storyPics}">
-                                    <img  th:src="@{'data:image/png;base64,' + ${challenge}}" alt=""/>
-                                </figure>
-                            </div>
-                        </p>
+                        <h5 class="card-title">Description:</h5>
+                        <p class="card-text" th:utext="${storyDetails.description}"></p>
+
                         <hr>
 
-                            <h5 class="card-title">Video:</h5>
-                            <p class="card-text">
-                                <iframe width="520" height="345" th:src="${storyDetails.video}">
-                                </iframe>
-                                <a th:href="${storyDetails.video}">Video Link</a>
+                            <h5 class="card-title">Images:</h5>
+                            <p class="card-text" >
+                                <div class="gallery">
+                                    <figure th:each="challenge : ${storyPics}">
+                                        <img  th:src="@{'data:image/png;base64,' + ${challenge}}" alt=""/>
+                                    </figure>
+                                </div>
                             </p>
 
+                            <span th:if="*{storyDetails.video!=null and #strings.length(storyDetails.video)>1}">
+                                <hr>
+                                    <h5 class="card-title">Video:</h5>
+                                    <p class="card-text">
+                                        <iframe id="iframe" width="520" height="345" th:src="${storyDetails.video}" >
+                                        </iframe>
+                                        <a th:href="${storyDetails.video}">Video Link</a>
+                                    </p>
+                            </span>
 
 
-                            </div>       
+                            </div>  
+                            </div >
                             <br/>
                             <br/>
                             <div class="align-items-center text-center" >
-                                 <!--<a class="btn btn-primary btn-lg btn-signin text-center mx-auto" href="/gallery"  id="back" >Back to Gallery</a>
-                                <a class="btn btn-primary btn-lg btn-signin text-center mx-auto" th:href="@{'/challenges/'+ ${storyDetails.challengeDetail.id}}"   id="challenge"> Challenge Details</a>
-                                <a class="btn btn-primary btn-lg btn-signin text-center mx-auto" th:href="@{'/approve/'+ ${storyDetails.id}}"   id="approve">Approve</a>
-                                <a class="btn btn-primary btn-lg btn-signin text-center mx-auto" th:href="@{'/addcomments/'+ ${storyDetails.id}}"  id="comments">Add Comments</a>-->
+                                <!--<a class="btn btn-primary btn-lg btn-signin text-center mx-auto" href="/gallery"  id="back" >Back to Gallery</a>
+                               <a class="btn btn-primary btn-lg btn-signin text-center mx-auto" th:href="@{'/challenges/'+ ${storyDetails.challengeDetail.id}}"   id="challenge"> Challenge Details</a>
+                               <a class="btn btn-primary btn-lg btn-signin text-center mx-auto" th:href="@{'/approve/'+ ${storyDetails.id}}"   id="approve">Approve</a>
+                               <a class="btn btn-primary btn-lg btn-signin text-center mx-auto" th:href="@{'/addcomments/'+ ${storyDetails.id}}"  id="comments">Add Comments</a>-->
                                 <a class="btn btn-primary btn-lg btn-signin text-center mx-auto" href="/gallery" hidden id="back" >Back to Gallery</a>
                                 <a class="btn btn-primary btn-lg btn-signin text-center mx-auto" th:href="@{'/challenges/'+ ${storyDetails.challengeDetail.id}}"  hidden="true" id="challenge"> Challenge Details</a>
                                 <a class="btn btn-primary btn-lg btn-signin text-center mx-auto" th:href="@{'/approve/'+ ${storyDetails.id}}"  hidden="true" id="approve">Approve</a>
@@ -64,8 +67,11 @@
                             </div>
                             <script th:inline="javascript">
                                 /*<![CDATA[*/
-                                var username = [[${user}]];
-                                if (username === "admin") {
+                                var username = [[${user}
+                                ]];
+                                        var accept = [[${storyDetails.approved}
+                                        ]];
+                                if (username === "admin" && !accept) {
                                     document.getElementById("comments").hidden = false;
                                     document.getElementById("approve").hidden = false;
                                 } else {
@@ -74,8 +80,8 @@
                                 }
                                 /*]]>*/
 
-
+                                
 
                             </script>
-                            </body>
-                            </html>
+   </body>
+</html>
