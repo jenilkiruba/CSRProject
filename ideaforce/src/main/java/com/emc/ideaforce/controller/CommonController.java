@@ -60,7 +60,7 @@ public class CommonController {
         int approvedStories = commonService.getApprovedStoriesCount();
 
         int totalSteps = 65000000;
-        int stepsTaken = approvedStories * 6000;
+        int stepsTaken = approvedStories * 17500;
 
         int goalStatus = (int) Math.ceil((stepsTaken * 100f) / totalSteps);
         goalStatus = goalStatus > 100 ? 100 : goalStatus;
