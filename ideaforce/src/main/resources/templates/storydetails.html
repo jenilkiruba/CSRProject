@@ -58,30 +58,14 @@
                                <a class="btn btn-primary btn-lg btn-signin text-center mx-auto" th:href="@{'/challenges/'+ ${storyDetails.challengeDetail.id}}"   id="challenge"> Challenge Details</a>
                                <a class="btn btn-primary btn-lg btn-signin text-center mx-auto" th:href="@{'/approve/'+ ${storyDetails.id}}"   id="approve">Approve</a>
                                <a class="btn btn-primary btn-lg btn-signin text-center mx-auto" th:href="@{'/addcomments/'+ ${storyDetails.id}}"  id="comments">Add Comments</a>-->
-                                <a class="btn btn-primary btn-lg btn-signin text-center mx-auto" href="/gallery" hidden id="back" >Back to Gallery</a>
-                                <a class="btn btn-primary btn-lg btn-signin text-center mx-auto" th:href="@{'/challenges/'+ ${storyDetails.challengeDetail.id}}"  hidden="true" id="challenge"> Challenge Details</a>
-                                <a class="btn btn-primary btn-lg btn-signin text-center mx-auto" th:href="@{'/approve/'+ ${storyDetails.id}}"  hidden="true" id="approve">Approve</a>
-                                <a class="btn btn-primary btn-lg btn-signin text-center mx-auto" th:href="@{'/addcomments/'+ ${storyDetails.id}}" hidden="true" id="comments">Add Comments</a>
+                                <a class="btn btn-primary btn-lg btn-signin text-center mx-auto" href="/gallery"  id="back" >Gallery</a>
+                                <a class="btn btn-primary btn-lg btn-signin text-center mx-auto" th:href="@{'/challenges/'+ ${storyDetails.challengeDetail.id}}"  id="challenge">Challenge Details</a>
+                                <!--<a class="btn btn-primary btn-lg btn-signin text-center mx-auto" th:href="@{'/approve/'+ ${storyDetails.id}}"  hidden="true" id="approve">Approve</a>
+                                <a class="btn btn-primary btn-lg btn-signin text-center mx-auto" th:href="@{'/addcomments/'+ ${storyDetails.id}}" hidden="true" id="comments">Add Comments</a>-->
                             </div>
                             </div>
                             </div>
-                            <script th:inline="javascript">
-                                /*<![CDATA[*/
-                                var username = [[${user}
-                                ]];
-                                        var accept = [[${storyDetails.approved}
-                                        ]];
-                                if (username === "admin" && !accept) {
-                                    document.getElementById("comments").hidden = false;
-                                    document.getElementById("approve").hidden = false;
-                                } else {
-                                    document.getElementById("back").hidden = false;
-                                    document.getElementById("challenge").hidden = false;
-                                }
-                                /*]]>*/
 
-                                
-
-                            </script>
-   </body>
-</html>
+                            
+                            </body>
+                            </html>
