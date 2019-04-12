@@ -10,6 +10,7 @@
     position: fixed;
     top:4em;
     left:35%;
+    z-index: 1;
 }
 
 #unapproved-requests {

@@ -40,6 +40,7 @@ function handleComments(e) {
                 $('.modal-title').html("Comment challenge <strong>'" + challengeName + "'</strong>");
                 $('.modal-body').html(data);
                 $('.modal').show();
+                $('#modal-submit-btn').show();
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback
                 $('#flash_message').html('<div class="alert alert-danger"><a href="#" style="margin-left: 1em;" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Failure - </strong> Could not fetch the comment.</div>');
@@ -97,7 +98,7 @@ function viewDetails(e){
                 $('.modal-title').html("<strong>Story '" + storyName + "' by '" + user + "' </strong>");
                 $('.modal-body').html(data);
                 $('.modal').show();
-                $('#modal-submit-btn').remove();
+                $('#modal-submit-btn').hide();
             },
             error: function (jqXhr, textStatus, errorMessage) { // error callback
                 $('#flash_message').html('<div class="alert alert-danger"><a href="#" style="margin-left: 1em;" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Failure - </strong> Could not fetch the details for story <b>' + storyName +'</b> </div>');
