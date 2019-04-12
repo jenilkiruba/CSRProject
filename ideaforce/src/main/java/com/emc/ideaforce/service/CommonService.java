@@ -102,23 +102,20 @@ public class CommonService {
         return storyRepository.getOne(storyId);
     }
 
-    public void saveStoryComment(CommentDto commentModel, User currentUser) {
-        StoryComments storyCommentsEntity = new StoryComments();
-        storyCommentsEntity.setStoryId(commentModel.getStoryId());
-        storyCommentsEntity.setComment(commentModel.getComment());
+    public void saveStoryComment(StoryComments storyCommentsEntity, User currentUser) {
         storyCommentsEntity.setUser(currentUser);
         storyCommentsEntity.setCreated(new Date(System.currentTimeMillis()));
         storyCommentsEntity.setLastUpdated(new Date(System.currentTimeMillis()));
         storyCommentRepository.save(storyCommentsEntity);
     }
 
-    public List<StoryComments> getAllCommentsForStory(String id) {
-        return storyCommentRepository.findAllByStoryIdEqualsOrderByCreatedDesc(id);
+    public StoryComments getCommentForStory(String id) {
+        return storyCommentRepository.findByStoryIdEquals(id);
     }
 
     public List<ChallengeCount> getTopTenChallengers() {
         List<ChallengeCount> challengeCounts = new ArrayList<>();
-        List<ChallengerCountProjection> challengers = storyRepository.findUsersWithStoryCount(PageRequest.of(0, 20));
+        List<ChallengerCountProjection> challengers = storyRepository.findUsersWithStoryCount(PageRequest.of(0, 50));
         if (!isEmpty(challengers)) {
             for (ChallengerCountProjection challengerCountProjection : challengers) {
                 challengeCounts.add(new ChallengeCount(userService.getUser(challengerCountProjection.getUserId()),

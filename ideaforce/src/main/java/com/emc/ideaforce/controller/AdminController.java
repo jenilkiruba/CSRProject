@@ -30,7 +30,6 @@ public class AdminController {
 
     public static final String ADMIN = "admin";
     public static final String UNAPPROVED_CHALLENGES = "unapprovedchallenges";
-    public static final String APPROVE_CHALLENGE = "approved";
     public static final String ADD_COMMENTS_VIEW = "addcomments";
     public static final String VIEW_COMMENTS_VIEW = "viewcomments";
     private static final String VIEW_STORY_DETAILS_VIEW = "storydetails";
@@ -41,7 +40,7 @@ public class AdminController {
     private final UserService userService;
 
     @RolesAllowed(ADMIN_ROLE)
-    @GetMapping(value = "/admin")
+    @GetMapping(value = "/admin", produces = "application/json")
     public ModelAndView showAdminPage() {
         List<Story> unApprovedChallengeDetailList = commonService.getUnapprovedStories();
 
@@ -51,10 +50,14 @@ public class AdminController {
     }
 
     @RolesAllowed(ADMIN_ROLE)
-    @GetMapping(value = "/approve/{id}")
-    public String approveStory(@PathVariable String id) {
+    @GetMapping(value = "/approve/{id}", produces = "application/json")
+    public ModelAndView approveStory(@PathVariable String id) {
         commonService.approveStory(id);
-        return APPROVE_CHALLENGE;
+        ModelAndView mv = new ModelAndView(ADMIN + " :: resultsList");
+        List<Story> unApprovedChallengeDetailList = commonService.getUnapprovedStories();
+        mv.addObject(UNAPPROVED_CHALLENGES, unApprovedChallengeDetailList);
+
+        return mv;
     }
 
     @GetMapping(value = "/addcomments/{id}")
@@ -67,17 +70,29 @@ public class AdminController {
 
     @PostMapping(value = "/addcomments")
     public ModelAndView addCommentsForStory(Principal principal,
-            @ModelAttribute("newcomment") CommentDto commentModel) {
+                                            @ModelAttribute("storyComment") StoryComments commentModel) {
         User currentUser = userService.getUser(principal.getName());
+        StoryComments comment = commonService.getCommentForStory(commentModel.getStoryId());
+        if(comment != null) {
+            String commentId = comment.getId() + "";
+            commentModel.setId(Integer.parseInt(commentId));
+        }
         commonService.saveStoryComment(commentModel, currentUser);
         return showAdminPage();
     }
 
     @GetMapping(value = "/viewcomments/{id}")
-    public ModelAndView viewCommentsForStory(@PathVariable String id) {
-        List<StoryComments> storyComments = commonService.getAllCommentsForStory(id);
+    public ModelAndView viewCommentForStory(@PathVariable String id) {
         ModelAndView mvObject = new ModelAndView(VIEW_COMMENTS_VIEW);
-        mvObject.addObject("storyComments", storyComments);
+        StoryComments storyComment = commonService.getCommentForStory(id);
+
+        if(storyComment == null){
+            storyComment = new StoryComments();
+            storyComment.setStoryId(id);
+        }
+
+        mvObject.addObject("storyComment", storyComment);
+
         return mvObject;
     }
 
