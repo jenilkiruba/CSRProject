@@ -4,6 +4,7 @@
 <head>
     <span th:include="common/header :: common-header"></span>
     <link rel="stylesheet" type="text/css" th:href="@{/assets/css/index.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/admin.css}"/>
     <title>Around The World :: Admin </title>
     <script type="text/javascript" th:src="@{/assets/js/admin.js}"></script>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
@@ -19,30 +20,32 @@
 </header>
 <div class="container main">
     <div class="row">
-    <div id="flash_message"></div>
+    <div id="flash_message" style="display: none"></div>
     </div>
-    <h4 style="text-align: center;font-weight: bold;">Pending Challenges</h4><div th:fragment="comment-fragment" id="new-comment">
-    <!-- The Modal -->
+    <h4 id="pending_title">Pending Challenges</h4><div th:fragment="comment-fragment" id="new-comment">
+
+    <!-- The Modal for fullscreen image -->
+    <div id="imgModal" class="img-modal">
+        <span class="spanClose" onclick="closeImgModal()">&times;</span>
+        <img class="img-modal-content" id="img01">
+        <div id="caption"></div>
+    </div>
+
+    <!-- The Modal for comments -->
     <div class="modal">
         <div class="modal-dialog">
             <div class="modal-content">
 
-                <!-- Modal Header -->
-                <div class="modal-header">
+                <div class="modal-header modal-header-green">
                     <h4 class="modal-title"></h4>
                     <button type="button" class="close" onclick="closeModal()">&times;</button>
                 </div>
 
-                <!-- Modal body -->
-                <div class="modal-body">
+                <div class="modal-body"></div>
 
-                </div>
-
-                <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button class="btn btn-danger btn-sm" style="background: #0076ceb3;border: 1px solid;" onclick="submitComment()"><span class="glyphicon glyphicon-comment"></span> Comment </button>
+                    <button id="modal-submit-btn" class="btn btn-danger btn-sm" style="background: #0076ceb3;border: 1px solid;" onclick="submitComment()"><span class="glyphicon glyphicon-comment"></span> Comment </button>
                 </div>
-
             </div>
         </div>
     </div>
@@ -64,7 +67,7 @@
 
         <tr th:id="'row'+${unapprovedchallenge.id}" th:each="unapprovedchallenge : ${unapprovedchallenges}">
             <td th:text="${unapprovedchallenge.challengeDetail.name}"></td>
-            <td><p th:id="${unapprovedchallenge.id}" th:text="${unapprovedchallenge.title}" onclick="viewDetails(this)" style="color: royalblue;text-decoration: underline;cursor: pointer;"></p></td>
+            <td><p th:id="${unapprovedchallenge.user.firstName} + '_' + ${unapprovedchallenge.title}+'_' + ${unapprovedchallenge.id}" th:text="${unapprovedchallenge.title}" onclick="viewDetails(this)" style="color: royalblue;text-decoration: underline;cursor: pointer;"></p></td>
             <td th:text="${#strings.capitalize(unapprovedchallenge.user.firstName) + ' ' + #strings.capitalize(unapprovedchallenge.user.lastName)}"></td>
             <td th:text="${#strings.capitalize(unapprovedchallenge.user.userLocation)}"></td>
             <td><button th:id="${unapprovedchallenge.id}" th:name="${unapprovedchallenge.challengeDetail.name}" onclick="approveRequest(this)" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="bottom" title="Approve"><span class="glyphicon glyphicon-ok-sign"></span></button></td>
