@@ -7,88 +7,6 @@ h6{
     margin-bottom: 10%;
 }
 
-.results-block .btn-info {
-    background-color: #507505;
-    border: 1px solid;
-}
-
-.results-block .btn-info:hover {
-    background-color: #6ea204;
-    border: 1px solid;
-}
-
-.results-block .btn-danger {
-    background-color: #0076ce   ;
-    border: 1px solid;
-}
-
-.results-block .btn-danger:hover {
-    background-color: #0076ceb3;
-    border: 1px solid;
-}
-
-.pagination a {
-    height:27px;
-    font-size:10px;
-}
-
-.dataTables_length {
-    display:none;
-}
-
-.dataTables_filter {
-    display: none;
-}
-
-#unapproved-requests_info {
-    font-size:12px
-}
-
-#flash_message {
-    width: 100%;
-    margin-top: 2%;
-    height: 52px;
-}
-
-#unapproved-requests {
-    width:100%;
-    border: 0.4px solid #c9c3dc;
-    border-radius: 10px;
-}
-
-#unapproved-requests td {
-    border: none ;
-    color: grey;
-    vertical-align: middle;
-    width: 1px;
-    padding-left: 20px;
-}
-
-#unapproved-requests tr {
-    font-size: 12px;
-}
-
-#unapproved-requests tr:nth-child(even) {
-    background-color: #d3d3d330 ;
-}
-
-#unapproved-requests thead th {
-    background-color: #6ea204;
-    color: white;
-    border-bottom: none;
-    height: 25px;
-    vertical-align: middle;
-    padding-left: 20px;
-}
-
-#unapproved-requests thead th:first-child {
-    border-radius: 10px 0 0 0;
-}
-
-#unapproved-requests thead th:last-child {
-    border-radius: 0 10px 0 0;
-}
-
 .main_banner{
     min-height: calc(100% - 92vh);
     background-color: #6EA204;
@@ -530,3 +448,12 @@ figure img:hover{
     justify-content: space-between;
     flex-wrap: wrap;
 }
+
+.modal-gallery {
+    width: 100%;
+    margin-top: 2em;
+    background-color: #9acd323d;
+    border-radius: 8px;
+    margin-bottom: 2em;
+}
+
